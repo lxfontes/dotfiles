@@ -1,0 +1,7 @@
+vbell off
+defutf8 on
+startup_message off
+hardstatus alwayslastline
+hardstatus string '%{= kg}[%{G}%H%{g}][%= %{= kw}%?%-Lw%?%{=b kR}(%{W}%n-%t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}]%{g}[%{G}%C%A%{g}]'
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+defscrollback 3000
