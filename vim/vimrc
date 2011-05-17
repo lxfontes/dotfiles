@@ -1,0 +1,128 @@
+set runtimepath+=~/.vim/vundle.git/
+call vundle#rc()
+
+Bundle "fugitive.vim"
+Bundle "Markdown"
+Bundle "The-NERD-tree"
+Bundle "Align"
+Bundle "tComment"
+Bundle "http://github.com/rstacruz/sparkup.git", {'rtp': 'vim/'}
+Bundle "http://github.com/mattn/gist-vim.git"
+Bundle "desert.vim"
+Bundle "Wombat"
+Bundle "sandvine"
+
+
+filetype plugin on
+set ofu=syntaxcomplete#Complete
+autocmd FileType python set
+set tags+=$HOME/.vim/tags/python.ctags
+
+set t_Co=256
+
+syntax on
+filetype plugin indent on
+set tabstop=4
+set smarttab
+set shiftwidth=4
+set autoindent
+set smartindent
+set expandtab
+
+
+command MkGuard         call MakeIncGuard()
+function MakeIncGuard()
+	let basename = substitute(bufname(""), '.*/', '', '')
+	let guard = '__' . substitute(toupper(basename), '\.', '_', "g") . '__'
+	call append(0, "#ifndef " . guard)
+	call append(1, "#define " . guard)
+	call append(line("$"), "#endif")
+endfunction
+
+
+command MkScriptAuthor        call MakeScriptAuthor()
+function MakeScriptAuthor()
+	call append(1, "#coding: utf-8")
+	call append(2, "#author: lxfontes")
+endfunction
+
+
+"Go save swap files somewhere else
+if has("win32") || has("win64")
+  set directory=$TMP
+else
+  set directory=/tmp
+end
+
+"no compatible
+set nocompatible
+
+"stop being annoying
+set visualbell
+
+set encoding=utf8
+
+set ffs=unix,dos,mac "Default file type
+
+"command completion
+set wildmode=list:longest
+set completeopt=longest,menuone
+
+"terminal title
+set title
+
+"my lil statusline (always on)
+set laststatus=2
+set statusline=%<%F%h%m%r%h%w%y\ %{&ff}\ %=\ lin:%l\,%L\ col:%c%V\ pos:%o\ ascii:%b\ %P
+
+
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+set ignorecase "Ignore case when searching
+set smartcase
+
+set hlsearch "Highlight search things
+
+set incsearch "Make search act like search in modern browsers
+
+:autocmd BufNewFile *.h MkGuard
+
+"sandvine policy
+autocmd BufNewFile,BufRead policy*.conf set filetype=sandvine
+
+"waf scripts
+autocmd BufNewFile,BufRead wscript set filetype=python
+
+"remember file position
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" Highlight end of line whitespace.
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
+
+let mapleader = ","
+
+:map <leader>t :NERDTreeToggle<CR>
+
+nnoremap <leader>p :tabprevious<CR>
+nnoremap <leader>n :tabnext<CR>
+
+"Specify the behavior when switching between buffers
+ try
+   set switchbuf=usetab
+   set stal=2
+ catch
+ endtry
+
+nnoremap <silent> <F8> :TlistToggle<CR>
+map <F1> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
+
+
+colorscheme wombat
