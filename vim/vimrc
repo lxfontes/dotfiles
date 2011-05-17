@@ -11,6 +11,8 @@ Bundle "http://github.com/mattn/gist-vim.git"
 Bundle "desert.vim"
 Bundle "Wombat"
 Bundle "sandvine"
+Bundle "taglist.vim"
+Bundle "python.vim"
 
 
 filetype plugin on
