@@ -15,13 +15,24 @@ Bundle "sandvine"
 Bundle "taglist.vim"
 Bundle "python.vim"
 Bundle "Conque-Shell"
+Bundle "Solarized"
 
 let mapleader = ","
 let g:mapleader = ","
 
+"enable 256 colors
+set t_Co=256
+set background=dark
+colorscheme solarized
+
+
+
 filetype plugin on
-set ofu=syntaxcomplete#Complete
-autocmd FileType python set
+
+"Python magic
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+"static tags
 set tags+=$HOME/.vim/tags/python.ctags
 
 
@@ -110,8 +121,8 @@ autocmd BufRead *.test                  setlocal filetype=cpp
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
 " Highlight end of line whitespace.
-highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
 
 
@@ -131,10 +142,6 @@ nnoremap <leader>n :tabnext<CR>
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-
-"enable 256 colors
-set t_Co=256
-colorscheme wombat
 
 
 
@@ -168,9 +175,6 @@ if has("gui_macvim")
     set transp=1
     set anti enc=utf-8 gfn=Menlo:h14,Monaco:h14
     set fuoptions=maxvert,maxhorz
-" Highlight current line
-    hi CursorLine guibg=#2d2d2d
-    set cursorline
 endif
 
 " Windows
@@ -178,9 +182,6 @@ if has("win32") || has("win64")
     " Use CUA keystrokes for clipboard: CTRL-X, CTRL-C, CTRL-V and CTRL-z
     source $VIMRUNTIME/mswin.vim
     set guifont=Consolas:h13:cANSI,Anonymous\ Pro:h13:cANSI
-" Highlight current line
-    hi CursorLine guibg=#2d2d2d
-    set cursorline
 endif
 
 "Specify the behavior when switching between buffers
@@ -191,3 +192,5 @@ endif
  endtry
 
 
+" Highlight current line
+set cursorline
