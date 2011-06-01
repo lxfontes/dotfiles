@@ -1,6 +1,7 @@
 set runtimepath+=~/.vim/vundle.git/
 call vundle#rc()
 
+" Plugins setup
 Bundle "fugitive.vim"
 Bundle "Markdown"
 Bundle "The-NERD-tree"
@@ -13,20 +14,22 @@ Bundle "Wombat"
 Bundle "sandvine"
 Bundle "taglist.vim"
 Bundle "python.vim"
+Bundle "Conque-Shell"
 
+let mapleader = ","
+let g:mapleader = ","
 
 filetype plugin on
 set ofu=syntaxcomplete#Complete
 autocmd FileType python set
 set tags+=$HOME/.vim/tags/python.ctags
 
-set t_Co=256
 
 syntax on
 filetype plugin indent on
-set tabstop=2
+set tabstop=4
 set smarttab
-set shiftwidth=2
+set shiftwidth=4
 set autoindent
 set smartindent
 set expandtab
@@ -70,8 +73,6 @@ set ffs=unix,dos,mac "Default file type
 set wildmode=list:longest
 set completeopt=longest,menuone
 
-"terminal title
-set title
 
 "my lil statusline (always on)
 set laststatus=2
@@ -88,13 +89,22 @@ set hlsearch "Highlight search things
 
 set incsearch "Make search act like search in modern browsers
 
+" .h files
 :autocmd BufNewFile *.h MkGuard
+
+" JSON
+au! BufRead,BufNewFile *.json setfiletype javascript
 
 "sandvine policy
 autocmd BufNewFile,BufRead policy*.conf set filetype=sandvine
+autocmd BufNewFile,BufRead policy.conf set filetype=sandvine
 
 "waf scripts
 autocmd BufNewFile,BufRead wscript set filetype=python
+
+
+"test
+autocmd BufRead *.test                  setlocal filetype=cpp
 
 "remember file position
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
@@ -103,12 +113,75 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
-let mapleader = ","
 
-:map <leader>t :NERDTreeToggle<CR>
 
+
+
+map <F1> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
+nnoremap <silent> <F4> :tabprevious<CR>
+nnoremap <silent> <F5> :tabnext<CR>
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 nnoremap <leader>p :tabprevious<CR>
 nnoremap <leader>n :tabnext<CR>
+
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
+
+
+"enable 256 colors
+set t_Co=256
+colorscheme wombat
+
+
+
+function! s:Terminal()
+    execute 'ConqueTermSplit bash --login'
+endfunction
+command! Terminal call s:Terminal()
+
+
+
+" GUI options
+if has("gui_running")
+  " No menus and no toolbar
+  set guioptions-=m
+  set guioptions-=T
+endif
+
+
+" Appearance
+set ruler
+set title
+set wrap
+if exists("+colorcolumn")
+  set colorcolumn=81
+endif
+set scrolloff=3
+
+
+" MacVim
+if has("gui_macvim")
+    set transp=1
+    set anti enc=utf-8 gfn=Menlo:h14,Monaco:h14
+    set fuoptions=maxvert,maxhorz
+" Highlight current line
+    hi CursorLine guibg=#2d2d2d
+    set cursorline
+endif
+
+" Windows
+if has("win32") || has("win64")
+    " Use CUA keystrokes for clipboard: CTRL-X, CTRL-C, CTRL-V and CTRL-z
+    source $VIMRUNTIME/mswin.vim
+    set guifont=Consolas:h13:cANSI,Anonymous\ Pro:h13:cANSI
+" Highlight current line
+    hi CursorLine guibg=#2d2d2d
+    set cursorline
+endif
 
 "Specify the behavior when switching between buffers
  try
@@ -117,14 +190,4 @@ nnoremap <leader>n :tabnext<CR>
  catch
  endtry
 
-nnoremap <silent> <F8> :TlistToggle<CR>
-map <F1> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-nnoremap // :TComment<CR>
-vnoremap // :TComment<CR>
-
-
-colorscheme wombat
