@@ -146,7 +146,7 @@ vnoremap // :TComment<CR>
 
 
 function! s:Terminal()
-    execute 'ConqueTermSplit bash --login'
+    execute 'ConqueTermTab bash --login'
 endfunction
 command! Terminal call s:Terminal()
 
