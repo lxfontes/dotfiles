@@ -16,6 +16,7 @@ Bundle "taglist.vim"
 Bundle "python.vim"
 Bundle "Conque-Shell"
 Bundle "Solarized"
+Bundle "wombat256.vim"
 
 let mapleader = ","
 let g:mapleader = ","
@@ -23,7 +24,7 @@ let g:mapleader = ","
 "enable 256 colors
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme wombat256mod
 
 
 
