@@ -2,20 +2,35 @@ set runtimepath+=~/.vim/vundle.git/
 call vundle#rc()
 
 " Plugins setup
+" VIM
 Bundle "fugitive.vim"
+" taglists
+Bundle "Tagbar"
+Bundle "taglist.vim"
+" doc @ github
 Bundle "Markdown"
+" file mgmt / terminal
 Bundle "The-NERD-tree"
+Bundle "Conque-Shell"
+" code mgmt
 Bundle "Align"
 Bundle "tComment"
+" html identation
 Bundle "http://github.com/rstacruz/sparkup.git", {'rtp': 'vim/'}
+" gists @ github
 Bundle "http://github.com/mattn/gist-vim.git"
-Bundle "desert.vim"
-Bundle "Wombat"
+" language specific
 Bundle "sandvine"
-Bundle "taglist.vim"
 Bundle "python.vim"
-Bundle "Conque-Shell"
-Bundle "Solarized"
+" snippets
+Bundle "snipMate"
+Bundle "snipmate-snippets"
+
+" themes
+" always keep 'desert' as fallback
+Bundle "desert.vim"
+Bundle "JellyX"
+Bundle "molokai"
 
 let mapleader = ","
 let g:mapleader = ","
@@ -23,7 +38,7 @@ let g:mapleader = ","
 "enable 256 colors
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme molokai
 
 
 
@@ -38,12 +53,11 @@ set tags+=$HOME/.vim/tags/python.ctags
 
 syntax on
 filetype plugin indent on
-set tabstop=4
+set tabstop=8
 set smarttab
-set shiftwidth=4
+set shiftwidth=8
 set autoindent
 set smartindent
-set expandtab
 
 
 command MkGuard         call MakeIncGuard()
@@ -120,24 +134,26 @@ autocmd BufRead *.test                  setlocal filetype=cpp
 "remember file position
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
+"python specific settings
+autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
+
 " Highlight end of line whitespace.
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 
 
-
-
 map <F1> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
-nnoremap <silent> <F4> :tabprevious<CR>
-nnoremap <silent> <F5> :tabnext<CR>
-nnoremap <silent> <F8> :TlistToggle<CR>
+
+"tag list width
+let Tlist_WinWidth = 80
+nnoremap <silent> <F3> :TlistToggle<CR>
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-nnoremap <leader>p :tabprevious<CR>
-nnoremap <leader>n :tabnext<CR>
+nnoremap <C-j> :tabprevious<CR>
+nnoremap <C-k> :tabnext<CR>
 
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
