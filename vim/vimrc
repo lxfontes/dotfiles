@@ -22,7 +22,6 @@ Bundle "http://github.com/mattn/gist-vim.git"
 " language specific
 Bundle "sandvine"
 Bundle "python.vim"
-<<<<<<< HEAD
 " snippets
 Bundle "snipMate"
 Bundle "snipmate-snippets"
@@ -32,11 +31,6 @@ Bundle "snipmate-snippets"
 Bundle "desert.vim"
 Bundle "JellyX"
 Bundle "molokai"
-=======
-Bundle "Conque-Shell"
-Bundle "Solarized"
-Bundle "wombat256.vim"
->>>>>>> b09cebe54c798e1711ff0a4d28c2d98e42f3268e
 
 let mapleader = ","
 let g:mapleader = ","
@@ -44,11 +38,7 @@ let g:mapleader = ","
 "enable 256 colors
 set t_Co=256
 set background=dark
-<<<<<<< HEAD
 colorscheme molokai
-=======
-colorscheme wombat256mod
->>>>>>> b09cebe54c798e1711ff0a4d28c2d98e42f3268e
 
 
 
