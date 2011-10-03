@@ -149,9 +149,10 @@ nnoremap <silent> <F2> :NERDTreeToggle<CR>
 "tag list width
 let Tlist_WinWidth = 80
 nnoremap <silent> <F3> :TlistToggle<CR>
+map <F5> :make<CR>
 
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+"remove extra white space from line end
+noremap <leader>s :%s/\s\+$//g<CR>
 nnoremap <C-j> :tabprevious<CR>
 nnoremap <C-k> :tabnext<CR>
 
