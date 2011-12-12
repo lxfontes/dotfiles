@@ -1,7 +1,7 @@
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
-PATH=/usr/local/bin:/usr/local/sbin:$PATH:$HOME/bin:/Applications/Wireshark.app/Contents/Resources/bin/:/Developer/usr/bin
+PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:/Applications/Wireshark.app/Contents/Resources/bin/:/Developer/usr/bin
 export PATH
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
