@@ -11,5 +11,4 @@ if [ -d $HOME/.vim/vundle.git ]; then
 else
 git clone http://github.com/gmarik/vundle.git $HOME/.vim/vundle.git
 fi
-
 cp -r $D/sandvine $HOME/.vim/bundle/

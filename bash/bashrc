@@ -1,0 +1,31 @@
+export CLICOLOR=1
+export LSCOLORS=Exfxcxdxbxegedabagacad
+
+PATH=/usr/local/bin:/usr/local/sbin:$PATH:$HOME/bin:/Applications/Wireshark.app/Contents/Resources/bin/:/Developer/usr/bin
+export PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+export GREP_OPTIONS="--color=auto"
+export GREP_COLOR="4;33"
+
+
+export PYTHONPATH=/usr/local/lib/python:.:$PYTHONPATH
+
+# Aliases
+alias play="/Users/lfontes/devel/play-1.2.3/play"
+alias ls='ls -G'
+alias rm='rm -vi'
+alias cp='cp -vi'
+alias mv='mv -vi'
+
+export EDITOR=vim
+
+export HISTSIZE=8000
+
+# Avoid OSX's tar to add dot underscore (._) files when creating archives.
+export COPYFILE_DISABLE=true
+
+# Geoip
+function geoip_curl_xml { curl -D - http://freegeoip.net/xml/$1; }
+alias geoip=geoip_curl_xml
