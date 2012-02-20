@@ -5,10 +5,13 @@ if [ -f $HOME/.vim/vimrc ]; then
   cp $HOME/.vim/vimrc $HOME/.vim/vimrc.zzbk
 fi
 cp $D/vimrc $HOME/.vim/vimrc
-cp $D/update_bundles $HOME/.vim/update_bundles
 
-mkdir -p $HOME/.vim/autoload $HOME/.vim/bundle; \
-	curl -so $HOME/.vim/autoload/pathogen.vim \
-	    https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
+mkdir -p $HOME/.vim/bundle;
+if [ -d $HOME/.vim/bundle/vundle ]; then
+#	(cd $HOME/.vim/bundle/vundle && git pull)
+echo
+else
+	git clone http://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+fi
 
 cp -r $D/sandvine $HOME/.vim/bundle/
