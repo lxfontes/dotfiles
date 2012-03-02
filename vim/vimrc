@@ -11,6 +11,8 @@ Bundle 'godlygeek/tabular'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'sjl/badwolf'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
@@ -31,7 +33,7 @@ let g:mapleader = ","
 "enable 256 colors
 set t_Co=256
 set background=dark
-colorscheme xoria256
+colorscheme badwolf
 
 " persistent undos - undo after you re-open the file
 " " but this gives warnings under command line vim
