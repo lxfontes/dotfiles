@@ -24,6 +24,7 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/Gist.vim'
 Bundle 'vim-scripts/xoria256.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Rip-Rip/clang_complete'
 Bundle 'sandvine'
 
 
