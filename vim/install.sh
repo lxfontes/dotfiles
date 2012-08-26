@@ -14,4 +14,3 @@ else
 	git clone http://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 fi
 
-cp -r $D/sandvine $HOME/.vim/bundle/
