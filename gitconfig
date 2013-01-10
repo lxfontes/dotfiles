@@ -1,0 +1,20 @@
+[user]
+	name = Lucas Fontes
+	email = lxfontes@gmail.com
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[alias]
+  hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+
+[gitflow "prefix"]
+        feature = feature/
+        release = qa/
+        hotfix = hotfix/
+        support = support/
+        versiontag = v
