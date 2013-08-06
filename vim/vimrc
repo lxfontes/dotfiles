@@ -246,7 +246,6 @@ set cursorline                " highlight current line
 "hi cursorline guibg=#333333   " highlight bg color of current line
 "hi CursorColumn guibg=#333333 " highlight cursor
 
-set nu
 set showmatch
 set wildmenu
 
@@ -260,7 +259,6 @@ let g:Powerline_symbols = 'fancy'
 
 let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 
-:set mouse=a
 
 
 "enable 256 colors
