@@ -1,19 +1,16 @@
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="$HOME/.rbenv/bin:$PATH"
+
+export GOPATH=$HOME/devel/gocode
+
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
-
-PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:/Applications/Wireshark.app/Contents/Resources/bin/:/Developer/usr/bin
-export PATH
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="4;33"
 
-
 export PYTHONPATH=/usr/local/lib/python:.:$PYTHONPATH
 
-# Aliases
-alias play="/Users/lfontes/devel/play-1.2.3/play"
 alias ls='ls -G'
 alias rm='rm -vi'
 alias cp='cp -vi'
