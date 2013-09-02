@@ -21,6 +21,8 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/Gist.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'closetag.vim'
+
 
 "markdown
 Bundle 'tpope/vim-markdown'
@@ -39,6 +41,8 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'tomasr/molokai'
 Bundle 'morhetz/gruvbox'
 Bundle 'sjl/badwolf'
+
+Bundle 'jnwhiteh/vim-golang'
 
 
 let mapleader = ","
@@ -73,9 +77,9 @@ set tags=./tags;$HOME
 
 
 syntax on
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 
 set autoindent
@@ -142,6 +146,10 @@ set hlsearch "Highlight search things
 
 set incsearch "Make search act like search in modern browsers
 
+" ruby goodies
+au BufRead,BufNewFile *.pill set ft=ruby
+au BufRead,BufNewFile Gemfile set ft=ruby
+
 " .h files
 :autocmd BufNewFile *.h MkGuard
 
@@ -160,6 +168,10 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 " Highlight end of line whitespace.
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
+
+" Highlight tabs
+syntax match Tab /\t/
+hi Tab gui=underline guifg=blue ctermbg=blue
 
 " bindings
 map <leader>g :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
@@ -251,9 +263,8 @@ set wildmenu
 
 
 "supertab
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+
 
 let g:Powerline_symbols = 'fancy'
 
@@ -265,3 +276,44 @@ let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 set t_Co=256
 colorscheme molokai
 set bg=dark
+
+
+
+Bundle 'gocode'
+Bundle 'Blackrush/vim-gocode'
+
+autocmd BufWritePre *.go :silent Fmt
+
+
+
+
+
+"go tag
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
