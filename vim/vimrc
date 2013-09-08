@@ -17,8 +17,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-fugitive'
 Bundle 'spolu/dwm.vim'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/Gist.vim'
+Bundle 'itchyny/lightline.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'closetag.vim'
@@ -265,8 +265,10 @@ set wildmenu
 "supertab
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
-let g:Powerline_symbols = 'fancy'
 
 let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 
