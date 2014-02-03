@@ -1,28 +1,34 @@
-set nocompatible
-filetype off
-
 "setup vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle "gmarik/vundle"
 
+"defaults
+Bundle 'tpope/vim-sensible'
+
+"go
+Bundle 'Blackrush/vim-gocode'
+
 "general
-Bundle 'kien/tabman.vim'
-Bundle 'tsaleh/vim-matchit'
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
+Bundle 'rking/ag.vim'
+Bundle 'vim-scripts/Align'
+Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'godlygeek/tabular'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-fugitive'
 Bundle 'spolu/dwm.vim'
-Bundle 'vim-scripts/Gist.vim'
+Bundle 'mattn/gist-vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'closetag.vim'
-
+Bundle 'majutsushi/tagbar'
+Bundle 'Shougo/neocomplete'
+Bundle 'scrooloose/syntastic'
 
 "markdown
 Bundle 'tpope/vim-markdown'
@@ -30,59 +36,50 @@ Bundle 'tpope/vim-markdown'
 "ruby/rails
 Bundle 'tpope/vim-rails'
 
-"c/c++
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'majutsushi/tagbar'
 
 "node/js
 Bundle 'pangloss/vim-javascript'
 
 "colors
 Bundle 'tomasr/molokai'
-Bundle 'morhetz/gruvbox'
+Bundle 'noahfrederick/vim-hemisu'
 Bundle 'sjl/badwolf'
+Bundle 'junegunn/seoul256.vim'
 
-Bundle 'jnwhiteh/vim-golang'
+
+
+
 
 
 let mapleader = ","
 let g:mapleader = ","
 
+"enable 256 colors
+set t_Co=256
+colorscheme hemisu
+set bg=dark
 
-" persistent undos - undo after you re-open the file
-" " but this gives warnings under command line vim
-" " use only in macvim
-if has('gui_running')
-	set undodir=~/.vim/backups
-	set undofile
-endif
-
-"display the current mode
-set showmode
-
-filetype plugin on
-filetype indent on
-set autoread
-
-let g:rails_menu=2
-let g:gist_clip_command = 'pbcopy'
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-
-"Python magic
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-"static tags
-set tags=./tags;$HOME
-
-
-syntax on
+"the most controversial settings ever
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-set autoindent
+
+set directory-=. " don't store swapfiles in the current directory
+set encoding=utf-8
+
+" Enable basic mouse behavior such as resizing buffers.
+set mouse=a
+if exists('$TMUX')  " Support resizing in tmux
+  set ttymouse=xterm2
+endif
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
 
 command MkGuard         call MakeIncGuard()
 function MakeIncGuard()
@@ -100,53 +97,18 @@ function MakeScriptAuthor()
 	call append(2, "#author: lxfontes")
 endfunction
 
-
-"Go save swap files somewhere else
-if has("win32") || has("win64")
-  set directory=$TMP
-else
-  set directory=/tmp
-end
-
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
 
 "stop being annoying
 set visualbell
-
-set encoding=utf8
-
-set ffs=unix,dos,mac "Default file type
-
-"command completion
-set wildmode=list:longest
-set completeopt=longest,menuone
-
-
-"my lil statusline (always on)
-if has('statusline')
-	set laststatus=2
-
-	                                         " Broken down into easily includeable segments
-	set statusline=%<%f\                     " Filename
-	set statusline+=%w%h%m%r                 " Options
-	set statusline+=%{fugitive#statusline()} " Git Hotness
-	set statusline+=\ [%{&ff}/%Y]            " filetype
-	set statusline+=\ [%{getcwd()}]          " current dir
-	set statusline+=\ [A=\%03.3b/H=\%02.2B]  " ASCII / Hexadecimal value of char
-	set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-endif
-
-
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
 
 set ignorecase "Ignore case when searching
 set smartcase
 
 set hlsearch "Highlight search things
 
-set incsearch "Make search act like search in modern browsers
-
-" ruby goodies
+" ruby mappings
 au BufRead,BufNewFile *.pill set ft=ruby
 au BufRead,BufNewFile Gemfile set ft=ruby
 
@@ -162,8 +124,8 @@ au! BufRead,BufNewFile *.ejs setfiletype html
 "waf scripts
 autocmd BufNewFile,BufRead wscript set filetype=python
 
-"remember file position
-au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+" autoformat go
+au FileType go au BufWritePre <buffer> Fmt
 
 " Highlight end of line whitespace.
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -174,24 +136,16 @@ syntax match Tab /\t/
 hi Tab gui=underline guifg=blue ctermbg=blue
 
 " bindings
-map <leader>g :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <F3> :NERDTreeToggle<CR>
+map <leader>l :Align
+nmap <leader>a :Ag<space>
+nmap <leader>d :NERDTreeToggle<CR>
+nmap <leader>] :TagbarToggle<CR>
+nmap <leader>g :GitGutterToggle<CR>
 
-map <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-
-map <F5> :make<CR>
-
+map <F5> :make<CR>:copen<CR>
 
 "remove extra white space from line end
 noremap <leader>s :%s/\s\+$//g<CR>
-
-" tab navigation like firefox
-nnoremap <C-t> :tabnew<CR>
-map <C-S-Right> :tabn<CR>
-imap <C-S-Right> <ESC>:tabn<CR>
-map <C-S-Left> :tabp<CR>
-imap <C-S-Left> <ESC>:tabp<CR>
 
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
@@ -200,57 +154,22 @@ vnoremap // :TComment<CR>
 
 
 
-" GUI options
-if has("gui_running")
-  " No menus and no toolbar
-  set guioptions-=m
-  set guioptions-=T
-endif
 
-
-" Appearance
-if has('cmdline_info')
-	set ruler                  	" show the ruler
-	set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
-	set showcmd                	" show partial commands in status line and
-					" selected characters/lines in visual mode
-endif
 
 set title
-set wrap
+"do not 'mask' long lines
+set nowrap
+
+
+"try to keep code within 80 columns
 if exists("+colorcolumn")
   set colorcolumn=81
 endif
+
+"make searches show on middle of screen
 set scrolloff=3
 set scrolljump=5
 
-
-" MacVim
-if has("gui_macvim")
-    set anti enc=utf-8 gfn=Anonymous\ Pro:h18,Anonymous\ Pro:h18
-    set fuoptions=maxvert,maxhorz
-endif
-
-" Windows
-if has("win32") || has("win64")
-    " Use CUA keystrokes for clipboard: CTRL-X, CTRL-C, CTRL-V and CTRL-z
-    source $VIMRUNTIME/mswin.vim
-    set guifont=Consolas:h13:cANSI,Anonymous\ Pro:h13:cANSI
-endif
-
-"Specify the behavior when switching between buffers
- try
-   set switchbuf=usetab
-   set stal=2
- catch
- endtry
-
-
-
-" configure nerdtree
-let NERDTreeIgnore = ['\.pyc$','\~$','\.rbc$']
-let NERDTreeMinimalUI=1
-let NERDTreeDirArrows=1
 
 
 " Highlight current line
@@ -259,35 +178,13 @@ set cursorline                " highlight current line
 "hi CursorColumn guibg=#333333 " highlight cursor
 
 set showmatch
+
+"command completion
 set wildmenu
+set wildmode=longest:full,full
 
-
-"supertab
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-
-
-let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
-
-
-
-"enable 256 colors
-set t_Co=256
-colorscheme molokai
-set bg=dark
-
-
-
-Bundle 'gocode'
-Bundle 'Blackrush/vim-gocode'
-
-autocmd BufWritePre *.go :silent Fmt
-
-
-
+"nice popup for completion
+set completeopt=menuone
 
 
 "go tag
@@ -319,3 +216,60 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+
+let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:gitgutter_enabled = 0
+
+let g:tagbar_autofocus = 1
+
+"nerdtree settings
+let g:NERDSpaceDelims=1
+" Auto open nerd tree on startup
+let g:nerdtree_tabs_open_on_gui_startup = 0
+" Focus in the main content window
+let g:nerdtree_tabs_focus_on_files = 1
+let NERDTreeIgnore = ['\.pyc$','\~$','\.rbc$']
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinSize = 30
+
+"lightline settings
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"⭤":""}',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
+"syntastic
+"mark syntax errors with :signs
+let g:syntastic_enable_signs=1
+"automatically jump to the error when saving the file
+let g:syntastic_auto_jump=0
+"show the error list automatically
+let g:syntastic_auto_loc_list=1
+"don't care about warnings
+let g:syntastic_quiet_messages = {'level': 'warnings'}
+
+" guidelines
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.\w*'
+
+" complete on enter
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+
+" clipboard integration
+set clipboard=unnamed
+

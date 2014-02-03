@@ -14,3 +14,5 @@ else
 	git clone http://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 fi
 
+go get -u github.com/jstemmer/gotags
+go get -u github.com/nsf/gocode
