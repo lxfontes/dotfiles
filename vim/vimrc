@@ -10,7 +10,7 @@ Bundle 'tpope/vim-sensible'
 Bundle 'Blackrush/vim-gocode'
 
 "general
-"Bundle 'ervandew/supertab'
+Bundle 'ervandew/supertab'
 Bundle 'rking/ag.vim'
 Bundle 'vim-scripts/Align'
 Bundle 'nathanaelkane/vim-indent-guides'
@@ -27,7 +27,6 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'closetag.vim'
 Bundle 'majutsushi/tagbar'
-Bundle 'Shougo/neocomplete'
 Bundle 'scrooloose/syntastic'
 
 "markdown
@@ -235,41 +234,21 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 30
 
 "lightline settings
-let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"⭤":""}',
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
-
+let g:lightline = { 'colorscheme': 'solarized' }
 "syntastic
 "mark syntax errors with :signs
 let g:syntastic_enable_signs=1
 "automatically jump to the error when saving the file
 let g:syntastic_auto_jump=0
-"show the error list automatically
-let g:syntastic_auto_loc_list=1
+"do not show the error list automatically
+let g:syntastic_auto_loc_list=0
 "don't care about warnings
-let g:syntastic_quiet_messages = {'level': 'warnings'}
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " guidelines
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.\w*'
-
-" complete on enter
-:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-
 " clipboard integration
 set clipboard=unnamed
-

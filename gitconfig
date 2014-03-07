@@ -1,20 +1,52 @@
 [user]
-	name = Lucas Fontes
-	email = lxfontes@gmail.com
+  name = lxfontes
+  email = lxfontes@gmail.com
+
+[gitflow "prefix"]
+  feature = feature/
+  release = qa/
+  hotfix = hotfix/
+  support = support/
+  versiontag = v
 
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+  diff = auto
+  status = auto
+  branch = auto
 
 [alias]
   hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
+  ds = diff --staged      # git ds - diff your staged changes == review before committing.
+  st = status -sb         # smarter status - include tag and branch info
+  ls = log --pretty=format:\"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]\" --decorate --date=short  # pretty one-line log with tags, branches and authors
+  lsv = log --pretty=format:\"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]\" --decorate --date=short --numstat    # a verbose ls, shows changed files too
+  cp = cherry-pick
+  ps = push
+  pl = pull
+  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+  l = log --graph --date=short
+  recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  simple = log --pretty=format:\" * %s\"
+  mt = mergetool
 
-[gitflow "prefix"]
-        feature = feature/
-        release = qa/
-        hotfix = hotfix/
-        support = support/
-        versiontag = v
+[format]
+    pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+[mergetool]
+    prompt = false
+[mergetool "mvimdiff"]
+    cmd="mvim -c 'Gdiff' $MERGED"     # use fugitive.vim for 3-way merge
+      keepbackup=false
+[merge]
+    summary = true
+      verbosity = 1
+        tool = mvimdiff
+[apply]
+    whitespace = nowarn
+[branch]
+    autosetupmerge = true
+[push]
+    default = tracking
+[rerere]
+    enabled = true
