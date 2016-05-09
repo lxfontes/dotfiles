@@ -5,5 +5,5 @@
 
 Left a few things to be done by hand.
 
-Check (Post Install)[postinstall.md].
+Check [Post Install](postinstall.md).
 
