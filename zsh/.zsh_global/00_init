@@ -1,0 +1,36 @@
+setopt auto_cd
+
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+
+alias bi='bundle install --path=.bundle/gems'
+alias be='bundle exec'
+
+export RBENV_ROOT=/usr/local/var/rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+GOVERSION=$(brew list go | head -n 1 | cut -d '/' -f 6)
+export GOROOT=$(brew --prefix)/Cellar/go/$GOVERSION/libexec
+export GOPATH=$HOME/code/gocode
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+alias vi=nvim
+alias vim=nvim
+export EDITOR=nvim
+export VISUAL=nvim
+
+export JAVA_HOME="$(/usr/libexec/java_home)"
+
+## aws
+export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.7.1.0/libexec"
+export AWS_ELB_HOME="/usr/local/Cellar/elb-tools/1.0.34.0/libexec"
+
+## NODE
+alias npm-exec='PATH=$(npm bin):$PATH'
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+## Z
+source `brew --prefix`/etc/profile.d/z.sh
+
+

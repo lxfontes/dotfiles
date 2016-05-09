@@ -10,9 +10,7 @@
   versiontag = v
 
 [color]
-  diff = auto
-  status = auto
-  branch = auto
+  ui = auto
 
 [alias]
   hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
@@ -33,15 +31,15 @@
 
 [format]
     pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
-[mergetool]
-    prompt = false
-[mergetool "mvimdiff"]
-    cmd="mvim -c 'Gdiff' $MERGED"     # use fugitive.vim for 3-way merge
-      keepbackup=false
+
 [merge]
-    summary = true
-      verbosity = 1
-        tool = mvimdiff
+  tool = opendiff
+  conflictstyle = diff3
+  summary = true
+  verbosity = 1
+  log = true
+  prompt = false
+
 [apply]
     whitespace = nowarn
 [branch]
@@ -50,3 +48,5 @@
     default = tracking
 [rerere]
     enabled = true
+[core]
+	excludesfile = /Users/lucas/.gitignore

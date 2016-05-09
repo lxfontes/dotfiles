@@ -1,0 +1,11 @@
+#!/bin/sh -x
+
+if [ ! -d "${HOME}/.zprezto" ]; then
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${HOME}/.zprezto"
+fi
+
+which -s brew
+if [ $? != 0 ]; then
+  # Install Homebrew
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
