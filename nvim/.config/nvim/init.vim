@@ -15,15 +15,12 @@ set clipboard=unnamed
 
 set nrformats-=octal
 set sidescrolloff=5
-set display+=lastline
+"set display+=lastline
 set encoding=utf-8
 
 " searches show in middle of screen
 set scrolloff=3
 set scrolljump=5
-
-" statusline
-set laststatus=2
 
 " leader timeout
 set ttimeout
@@ -72,6 +69,7 @@ call plug#begin('~/.nvim/plugged')
 Plug 'shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/syntastic'
+Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-git'
@@ -80,8 +78,6 @@ Plug 'vim-scripts/tComment'
 Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
 Plug 'garyburd/go-explorer'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdtree'
@@ -105,6 +101,39 @@ set t_Co=256
 
 set bg=dark
 colorscheme gruvbox
+
+" statusline
+set laststatus=2
+
+function! HighlightSearch()
+  if &hls
+    return 'H'
+  else
+    return ''
+  endif
+endfunction
+
+hi User1 guifg=#ffdad8  guibg=#880c0e ctermfg=193 ctermbg=57
+hi User2 guifg=#000000  guibg=#F4905C ctermfg=16 ctermbg=216
+hi User3 guifg=#292b00  guibg=#f4f597 ctermfg=235 ctermbg=228
+hi User4 guifg=#112605  guibg=#aefe7B ctermfg=233 ctermbg=157
+hi User5 guifg=#051d00  guibg=#7dcc7d ctermfg=232 ctermbg=49
+hi User7 guifg=#ffffff  guibg=#880c0e gui=bold ctermfg=15 ctermbg=124
+hi User8 guifg=#ffffff  guibg=#5b7fbb ctermfg=232 ctermbg=111
+hi User9 guifg=#ffffff  guibg=#810085 ctermfg=15 ctermbg=127
+hi User0 guifg=#ffffff  guibg=#094afe ctermfg=15 ctermbg=25
+
+set statusline=
+set statusline+=%7*\[%n]                                  "buffernr
+set statusline+=%1*\ %<%F\                                "File+path
+set statusline+=%2*\ %y\                                  "FileType
+set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
+set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
+set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..) 
+set statusline+=%5*\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
+set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
+set statusline+=%9*\ col:%03c\                            "Colnr
+set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
 
 " Make it obvious
 set textwidth=140
