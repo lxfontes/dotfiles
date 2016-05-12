@@ -119,21 +119,21 @@ hi User3 guifg=#292b00  guibg=#f4f597 ctermfg=235 ctermbg=228
 hi User4 guifg=#112605  guibg=#aefe7B ctermfg=233 ctermbg=157
 hi User5 guifg=#051d00  guibg=#7dcc7d ctermfg=232 ctermbg=49
 hi User7 guifg=#ffffff  guibg=#880c0e gui=bold ctermfg=15 ctermbg=124
-hi User8 guifg=#ffffff  guibg=#5b7fbb ctermfg=232 ctermbg=111
+hi User8 guifg=#ffffff  guibg=#5b7fbb ctermfg=15 ctermbg=8
 hi User9 guifg=#ffffff  guibg=#810085 ctermfg=15 ctermbg=127
 hi User0 guifg=#ffffff  guibg=#094afe ctermfg=15 ctermbg=25
 
 set statusline=
 set statusline+=%7*\[%n]                                  "buffernr
-set statusline+=%1*\ %<%F\                                "File+path
+set statusline+=%1*\ %<%{expand('%:t')}\                  "File+path
 set statusline+=%2*\ %y\                                  "FileType
 set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
 set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
 set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..) 
-set statusline+=%5*\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
-set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
-set statusline+=%9*\ col:%03c\                            "Colnr
-set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+set statusline+=%5*\ %{&spelllang}\                       "Spellanguage & Highlight on?
+set statusline+=%8*\ %=\                                  "space
+set statusline+=%9*\ %l/%L\ %03c\                         "line / col
+set statusline+=%0*\ %m%r%w%{HighlightSearch()}\ %P\ \                        "Modified? Readonly? Top/bot.
 
 " Make it obvious
 set textwidth=140
