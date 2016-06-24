@@ -57,25 +57,37 @@ set completeopt=longest,menuone,preview
 set wildignore=*.o,*.obj,*~
 set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
-set wildignore+=*DS_Store*
 set wildignore+=vendor/rails/**
 set wildignore+=vendor/cache/**
 set wildignore+=*.gem
+set wildignore+=.git/**
+set wildignore+=public/assets/**
+set wildignore+=vendor/**
 set wildignore+=log/**
 set wildignore+=tmp/**
-set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=Cellar/**
+set wildignore+=app/assets/images/**
+set wildignore+=_site/**
+set wildignore+=home/.vim/bundle/**
+set wildignore+=pkg/**
+set wildignore+=**/.gitkeep
+set wildignore+=**/.DS_Store
+set wildignore+=**/*.netrw*
+set wildignore+=node_modules/*
+
 
 call plug#begin('~/.nvim/plugged')
 Plug 'shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/syntastic'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/tComment'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'majutsushi/tagbar'
 Plug 'garyburd/go-explorer'
 Plug 'airblade/vim-gitgutter'
@@ -87,10 +99,11 @@ Plug 'rking/ag.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'closetag.vim'
 Plug 'rizzatti/dash.vim'
-Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-markdown'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'bwmcadams/vim-deckset'
 Plug 'othree/html5.vim'
 Plug 'shougo/deoplete.nvim'
 Plug 'zchee/deoplete-go', { 'do': 'make' }
@@ -170,15 +183,12 @@ autocmd BufReadPost *
 autocmd BufRead,BufNewFile Appraisals set filetype=ruby
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
-" Enable spellchecking for Markdown
+" spell check
 autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
 
 " Automatically wrap at 80 characters for Markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-" Automatically wrap at 72 characters and spell check git commit messages
-autocmd FileType gitcommit setlocal textwidth=72
-autocmd FileType gitcommit setlocal spell
 
 " Allow stylesheets to autocomplete hyphenated words
 autocmd FileType css,scss,sass setlocal iskeyword+=-
@@ -188,24 +198,19 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+set smarttab
 
 " Display extra whitespace
-set list listchars=tab:\ \ ,trail:· 
+set list listchars=tab:\ \ ,trail:·,extends:>,precedes:<,nbsp:+
 
 " Highlight listchars
-" highlight SpecialKey ctermbg=red guibg=red
+"highlight SpecialKey ctermbg=red guibg=red
 
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
@@ -227,15 +232,6 @@ set diffopt+=vertical
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 
-" airline
-let g:airline_powerline_fonts = 1
-let g:airline_exclude_preview = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ctrlp#enabled = 1
-let g:airline_left_sep = ' ' " flat, no weird chars
-let g:airline_right_sep = ' '
-let g:airline_theme='kolor'
-
 "syntastic
 " mark syntax errors with :signs
 let g:syntastic_enable_signs=1
@@ -248,13 +244,17 @@ let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 " specially when leaving
 let g:syntastic_check_on_wq = 0
 
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
 "" guidelines
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
-" ctrlp
-let g:ctrlp_match_window = 'order:ttb,max:20'
-let g:ctrlp_working_path_mode = 'ra'
 
 " File mappings
 " parentheses coloring
@@ -267,8 +267,8 @@ au Syntax * RainbowParenthesesLoadBraces
 au BufRead,BufNewFile *.pill set ft=ruby
 au BufRead,BufNewFile Gemfile set ft=ruby
 
-" JSON
-au! BufRead,BufNewFile *.json setfiletype javascript
+" EJSON
+au BufNewFile,BufRead *.ejson set filetype=json
 
 " html
 au! BufRead,BufNewFile *.ejs setfiletype html
@@ -284,8 +284,8 @@ noremap <leader>s :%s/\s\+$//g<CR>
 " Use <C-L> to clear the highlighting of :set hlsearch.
 nnoremap <silent> <leader>l :set hlsearch! hlsearch?<CR>
 " ctrl-p
-nnoremap <silent> <C-p> :CtrlPMixed<CR>
-nnoremap <silent> <leader><Space> :CtrlPBuffer<CR>
+nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <leader><Space> :Buffers<CR>
 " tagbar
 nmap <leader><Enter> :TagbarToggle<CR>
 " search
@@ -297,3 +297,9 @@ nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>v :vsplit<CR> <C-w><C-w>
 nmap <leader>s :split<CR> <C-w><C-w>
 nmap <leader>d :NERDTreeToggle<CR>
+
+
+
+
+let g:DecksetRequireGUI = 0
+

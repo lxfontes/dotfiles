@@ -1,5 +1,6 @@
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
+  'completion' \
   'environment' \
   'terminal' \
   'editor' \
@@ -7,7 +8,6 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'completion' \
   'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
