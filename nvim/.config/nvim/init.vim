@@ -3,6 +3,7 @@ let mapleader=" "
 
 set nocompatible
 set noshowmode
+set ttyfast
 
 set backspace=indent,eol,start
 set complete-=i
@@ -51,7 +52,7 @@ syntax on
 
 set exrc
 set wildmenu
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 
 "stuff to ignore when tab completing
 set wildignore=*.o,*.obj,*~
@@ -166,9 +167,8 @@ set nowb
 set title
 set cursorline
 
-" do not mask long lines
-set wrap
-set linebreak
+" do not wrap long lines
+set nowrap
 
 
 " When editing a file, always jump to the last known cursor position.
