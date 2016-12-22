@@ -1,6 +1,7 @@
 [user]
   name = lxfontes
   email = lxfontes@gmail.com
+	signingkey = 7CE41E09
 
 [gitflow "prefix"]
   feature = feature/
@@ -13,6 +14,7 @@
   ui = auto
 
 [alias]
+  balme = blame
   hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
@@ -50,3 +52,5 @@
     enabled = true
 [core]
 	excludesfile = /Users/lucas/.gitignore
+[commit]
+	gpgsign = true
