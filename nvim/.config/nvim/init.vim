@@ -5,6 +5,9 @@ set nocompatible
 set noshowmode
 set ttyfast
 
+" 24 bit
+set termguicolors
+
 set backspace=indent,eol,start
 set complete-=i
 
@@ -50,7 +53,9 @@ filetype indent on
 syntax on
 
 set wildmenu
-set completeopt=longest,menuone,preview
+set wildmode=longest:list,full
+set wildignorecase
+set completeopt=longest,menuone,noinsert
 
 "stuff to ignore when tab completing
 set wildignore=*.o,*.obj,*~
@@ -76,20 +81,18 @@ set wildignore+=node_modules/*
 
 
 call plug#begin('~/.nvim/plugged')
-
-" cosmetic
-Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" autocomplete
+Plug 'vim-syntastic/syntastic'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " tools
-Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 Plug 'airblade/vim-rooter'
+Plug 'scrooloose/nerdtree'
 
 " text manipulation
 Plug 'tomtom/tcomment_vim'
@@ -98,23 +101,34 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-surround'
 
-" completion / syntax check
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'scrooloose/syntastic'
-
 " ruby
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'alexgenco/neovim-ruby', { 'for': 'ruby' }
+Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
 
 " go
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'zchee/deoplete-go', { 'do': 'make' }
+Plug 'fatih/vim-go'
+Plug 'jodosha/vim-godebug'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 " html
 Plug 'ap/vim-css-color'
 Plug 'closetag.vim'
+
+" terraform
+Plug 'hashivim/vim-terraform'
+
+" cosmetic
+Plug 'flazz/vim-colorschemes'
+Plug 'jacoborus/tender.vim'
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
+set rtp+=$HOME/.nvim/plugged/vim-go/syntax
 
 " statusline
 set laststatus=2
@@ -137,6 +151,9 @@ set numberwidth=3
 
 " open files not tied to buffers
 set hidden
+
+
+set shortmess+=c
 
 " no regerts
 set nobackup
@@ -195,19 +212,16 @@ autocmd FileType gitcommit setlocal spell
 set t_Co=256
 
 set bg=dark
-colorscheme hybrid
+colorscheme kolor
 
 " no powerline
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme = 'simple'
-let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline_left_sep = "\ue0c6"
+let g:airline_right_sep = "\ue0c7"
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-" auto close preview window
-autocmd CompleteDone * pclose
+let g:airline_theme = 'kolor'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 " erb html tags
 let g:closetag_filenames = "*.html.erb,*.html,*.xhtml,*.phtml"
@@ -219,10 +233,12 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 " do not show the error list automatically
 let g:syntastic_auto_loc_list=0
-" don't care about warnings
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-" specially when leaving
+" still populate it
+let g:syntastic_always_populate_loc_list = 1
+
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 
 " go
@@ -231,15 +247,48 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+let g:go_list_type = "locationlist"
+let g:go_auto_type_info = 0
+let g:go_echo_command_info= 0
+let g:go_term_enabled = 1
+
 
 " markdown
 let g:vim_markdown_folding_disabled = 1
 
 " rooter
-let g:rooter_patterns = ['Rakefile', 'dev.yml', '.git/']
+let g:rooter_patterns = ['Rakefile', 'docker-compose.yml', 'cmd/', '.git/']
 let g:rooter_silent_chdir = 1
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#disable_auto_complete = 1
+let g:deoplete#enable_smart_case = 1
+" needed so it doesn't override vim-go cmdline after completion
+call deoplete#custom#set('_', 'converters', ['converter_auto_paren'])
+
+" only show stuff coming from tags, buffers, etc (not random text that is around)
+let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
+
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" NERDTree
+let NERDTreeDirArrows=1
+let NERDTreeMinimalUI=1
+let NERDTreeIgnore=['\.o$', '\.pyc$', '\.php\~$']
+let NERDTreeWinSize = 35
+
+" Make sure that when NT root is changed, Vim's pwd is also updated
+let NERDTreeShowLineNumbers = 1
+
+" Open NERDTree on startup, when no file has been specified
+autocmd VimEnter * if !argc() | NERDTree | endif
+
 " Bindings
+" terminal
+tnoremap kj <C-\><C-n>
 
 " Normal
 " Make it way easier to switch windows (<leader>w)
@@ -250,7 +299,7 @@ noremap <leader>s :%s/\s\+$//g<CR>
 nnoremap <silent> <leader>l :set hlsearch! hlsearch?<CR>
 " ctrl-p
 nnoremap <silent> <C-p> :FZF<CR>
-nnoremap <silent> <leader><Space> :Buffers<CR>
+nnoremap <leader><space> :Buffers<CR>
 " tagbar
 nmap <leader><Enter> :TagbarToggle<CR>
 " search
@@ -262,9 +311,50 @@ nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>v :vsplit<CR> <C-w><C-w>
 nmap <leader>s :split<CR> <C-w><C-w>
 
-nnoremap <leader>, :bp<CR>
-nnoremap <leader>. :bn<CR>
+nnoremap <tab> :bn<CR>
+nnoremap <s-tab> :bp<CR>
 
 " comments
-vmap // :gc<CR>
+vmap // :TComment<CR>
 
+" Toogle dirlist on/off
+nmap <leader>\ :NERDTreeToggle<cr>
+
+" completion stuff
+imap <silent><expr> <TAB>
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ deoplete#mappings#manual_complete()
+		function! s:check_back_space() abort "{{{
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+		endfunction"}}}
+imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+imap <expr> <cr>    pumvisible() ? deoplete#close_popup() : "\<cr>"
+
+" gopherz
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+augroup go
+  autocmd!
+
+  autocmd FileType go nmap <silent> <Leader>i <Plug>(go-info)
+  autocmd FileType go nmap <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd FileType go nmap <silent> <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <silent> <leader>r  <Plug>(go-run)
+
+  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-doc)
+  autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
+
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+augroup END
