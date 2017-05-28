@@ -3,10 +3,8 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 alias bi='bundle install --path=.bundle/gems'
 alias be='bundle exec'
 
-GOVERSION=1.7.3
-export GOROOT=/usr/local/Cellar/go/$GOVERSION/libexec
 export GOPATH=$HOME/code
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
 
 alias vi=nvim
 alias vim=nvim
@@ -25,6 +23,16 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 ## Z
 source /usr/local/etc/profile.d/z.sh
 
+## direnv.net
+eval "$(direnv hook zsh)"
+
+## rubby
+eval "$(rbenv init -)"
+
+## node
+export NVM_DIR="$HOME/.nvm"
+source /usr/local/opt/nvm/nvm.sh
+
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
@@ -35,4 +43,8 @@ KEYTIMEOUT=1
 
 kp() {
   kubectl get pod -l $1 -o name | cut -d/ -f2-
+}
+
+flushdns() {
+sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed
 }
