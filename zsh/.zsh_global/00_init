@@ -29,6 +29,10 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
 
+
+bindkey "^r" history-incremental-pattern-search-backward
+KEYTIMEOUT=1
+
 kp() {
   kubectl get pod -l $1 -o name | cut -d/ -f2-
 }

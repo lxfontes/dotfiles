@@ -26,10 +26,6 @@ set encoding=utf-8
 set scrolloff=3
 set scrolljump=5
 
-" leader timeout
-set ttimeout
-set ttimeoutlen=100
-
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -92,12 +88,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'majutsushi/tagbar'
+Plug 'airblade/vim-rooter'
 
 " text manipulation
 Plug 'tomtom/tcomment_vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-surround'
 
 " completion / syntax check
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -192,35 +191,6 @@ au FileType markdown setlocal spell
 
 autocmd FileType gitcommit setlocal spell
 
-" Bindings
-
-" Normal
-" Make it way easier to switch windows (<leader>w)
-nmap <leader>w <C-w><C-w>_
-"remove extra white space from line end
-noremap <leader>s :%s/\s\+$//g<CR>
-" Use <C-L> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <leader>l :set hlsearch! hlsearch?<CR>
-" ctrl-p
-nnoremap <silent> <C-p> :FZF<CR>
-nnoremap <silent> <leader><Space> :Buffers<CR>
-" tagbar
-nmap <leader><Enter> :TagbarToggle<CR>
-" search
-nmap <leader>a :Ag<space>
-" git gutter toggle
-nmap <leader>g :GitGutterToggle<CR>
-" split vertically with <leader> v
-" split horizontally with <leader> s
-nmap <leader>v :vsplit<CR> <C-w><C-w>
-nmap <leader>s :split<CR> <C-w><C-w>
-
-nnoremap <leader>, :bp<CR>
-nnoremap <leader>. :bn<CR>
-
-" comments
-vmap // :gc<CR>
-
 "enable 256 colors
 set t_Co=256
 
@@ -230,7 +200,7 @@ colorscheme hybrid
 " no powerline
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_theme='raven'
+let g:airline_theme = 'simple'
 let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#show_tab_type = 0
 
@@ -264,4 +234,37 @@ let g:go_highlight_build_constraints = 1
 
 " markdown
 let g:vim_markdown_folding_disabled = 1
+
+" rooter
+let g:rooter_patterns = ['Rakefile', 'dev.yml', '.git/']
+let g:rooter_silent_chdir = 1
+
+" Bindings
+
+" Normal
+" Make it way easier to switch windows (<leader>w)
+nmap <leader>w <C-w><C-w>_
+"remove extra white space from line end
+noremap <leader>s :%s/\s\+$//g<CR>
+" Use <C-L> to clear the highlighting of :set hlsearch.
+nnoremap <silent> <leader>l :set hlsearch! hlsearch?<CR>
+" ctrl-p
+nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <leader><Space> :Buffers<CR>
+" tagbar
+nmap <leader><Enter> :TagbarToggle<CR>
+" search
+nmap <leader>a :Ag<space>
+" git gutter toggle
+nmap <leader>g :GitGutterToggle<CR>
+" split vertically with <leader> v
+" split horizontally with <leader> s
+nmap <leader>v :vsplit<CR> <C-w><C-w>
+nmap <leader>s :split<CR> <C-w><C-w>
+
+nnoremap <leader>, :bp<CR>
+nnoremap <leader>. :bn<CR>
+
+" comments
+vmap // :gc<CR>
 
