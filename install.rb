@@ -7,6 +7,7 @@ EXCLUDED = [
   ".",
   "..",
   ".git",
+  "fonts",
   "iTerm",
   "README.md"
 ]
@@ -14,7 +15,9 @@ DOT_DIR    = File.expand_path(File.dirname(__FILE__))
 DOTFILES   = Dir.entries(DOT_DIR).select{|f| File.directory?(File.join(DOT_DIR, f)) } - EXCLUDED
 HOME       = ENV['HOME']
 BACKUP_DIR = File.join(HOME, '.backup')
-OPTIONS    = {}
+OPTIONS    = {
+  hooks: false
+}
 
 OptionParser.new do |opts|
   opts.on('-b', '--backup', 'Backup your current dotfiles(Will delete your current ~/.backup dir)') do
@@ -23,6 +26,10 @@ OptionParser.new do |opts|
 
   opts.on('-v', '--verbose', 'Verbose') do
     OPTIONS[:verbose] = true
+  end
+
+  opts.on('-i', '--install-hooks', 'run install hooks') do
+    OPTIONS[:hooks] = true
   end
 
   opts.on('-h', '--help', 'Show this help message') do
@@ -42,6 +49,8 @@ def debug(message)
 end
 
 def hook(name)
+  return true unless OPTIONS[:hooks]
+
   debug "[HOOK] #{name} start"
   Dir.chdir(DOT_DIR)
 
