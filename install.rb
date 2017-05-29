@@ -47,7 +47,7 @@ def hook(name)
 
   ret = true
   if File.exists?(name) && File.executable?(name)
-#    ret = system("./#{name}")
+    ret = system("./#{name}")
   end
 
   debug "[HOOK] #{name} end"
