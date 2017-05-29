@@ -114,7 +114,7 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 " html
 Plug 'ap/vim-css-color'
-Plug 'closetag.vim'
+Plug 'vim-scripts/closetag.vim'
 
 " terraform
 Plug 'hashivim/vim-terraform'
