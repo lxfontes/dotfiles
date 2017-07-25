@@ -1,11 +1,73 @@
-#!/bin/sh -x
+#!/bin/bash
+
+set -ex
+
+linux_stuff() {
+  sudo add-apt-repository -y ppa:neovim-ppa/unstable
+  sudo apt-get update
+  sudo apt-get install -y \
+  ctags \
+  zsh \
+  curl \
+  direnv \
+  neovim \
+  rbenv \
+  ngrep \
+  strace \
+  jq \
+  mtr-tiny \
+  silversearcher-ag \
+  s3cmd \
+  socat \
+  rlwrap \
+  ruby-build \
+  python-dev \
+  python-pip \
+  python3-dev \
+  python3-pip
+
+  pip3 install --user --upgrade neovim
+
+  sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+  sudo update-alternatives --config vi
+  sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+  sudo update-alternatives --config vim
+  sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+  sudo update-alternatives --config editor
+
+  if [ ! -d /usr/local/go ]; then
+    curl -O https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
+    tar -xvf go1.8.3.linux-amd64.tar.gz
+    sudo mv go /usr/local
+  fi
+}
+
+osx_stuff() {
+  which -s brew
+  if [ $? != 0 ]; then
+    # Install Homebrew
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+}
+
+case `uname -s` in
+  Darwin)
+    osx_stuff
+    ;;
+  Linux)
+    linux_stuff
+    ;;
+  **)
+    echo "wut?"
+    exit 1
+    ;;
+esac
 
 if [ ! -d "${HOME}/.zprezto" ]; then
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${HOME}/.zprezto"
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${HOME}/.zprezto"
 fi
 
-which -s brew
-if [ $? != 0 ]; then
-  # Install Homebrew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
+curl -s -fLo "${HOME}/.z.sh" \
+  https://raw.githubusercontent.com/rupa/z/master/z.sh
+
+mkdir -p $HOME/code/{src,pkg,bin}
