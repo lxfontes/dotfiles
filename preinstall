@@ -36,9 +36,11 @@ linux_stuff() {
   sudo update-alternatives --config editor
 
   if [ ! -d /usr/local/go ]; then
+    pushd /tmp
     curl -O https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
     tar -xvf go1.8.3.linux-amd64.tar.gz
     sudo mv go /usr/local
+    popd
   fi
 }
 
