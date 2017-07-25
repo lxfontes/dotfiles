@@ -1,7 +1,7 @@
 [user]
   name = lxfontes
   email = lxfontes@gmail.com
-	signingkey = 76844B8D7CE41E09
+  signingkey = C594A0BA
 
 [gitflow "prefix"]
   feature = feature/
@@ -54,4 +54,6 @@
 [core]
 	excludesfile = /Users/lucas/.gitignore
 [commit]
-#	gpgsign = true
+	gpgsign = true
+[gpg]
+	program = gpg2
