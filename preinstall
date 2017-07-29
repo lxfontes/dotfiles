@@ -16,9 +16,12 @@ linux_stuff() {
   strace \
   jq \
   mtr-tiny \
+  xsel \
   silversearcher-ag \
   s3cmd \
   socat \
+  libvirt-bin \
+  qemu-kvm \
   rlwrap \
   ruby-build \
   libssl-dev \
@@ -75,3 +78,4 @@ curl -s -fLo "${HOME}/.z.sh" \
   https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 mkdir -p $HOME/code/{src,pkg,bin}
+sudo usermod -a -G libvirtd $(whoami)
