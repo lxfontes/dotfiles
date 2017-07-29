@@ -18,7 +18,7 @@ set autoindent
 
 set mouse=a
 
-set clipboard=unnamed
+set clipboard+=unnamedplus
 
 " ctrl-a ctrl-x behaviour
 set nrformats-=octal
@@ -116,8 +116,9 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/closetag.vim'
 
-" terraform
+" terraform / hcl
 Plug 'hashivim/vim-terraform'
+Plug 'fatih/vim-hclfmt'
 
 " cosmetic
 Plug 'flazz/vim-colorschemes'
