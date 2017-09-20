@@ -16,14 +16,19 @@ linux_stuff() {
   strace \
   jq \
   mtr-tiny \
+  xsel \
   silversearcher-ag \
   s3cmd \
   socat \
+  libvirt-bin \
+  qemu-kvm \
   rlwrap \
   ruby-build \
+  libssl-dev \
   python-dev \
   python-pip \
   python3-dev \
+  python3-setuptools \
   python3-pip
 
   pip3 install --user --upgrade neovim
@@ -73,3 +78,4 @@ curl -s -fLo "${HOME}/.z.sh" \
   https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 mkdir -p $HOME/code/{src,pkg,bin}
+sudo usermod -a -G libvirtd $(whoami)
