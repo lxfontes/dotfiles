@@ -54,6 +54,11 @@
 [core]
 	excludesfile = /Users/lucas/.gitignore
 [commit]
-	gpgsign = true
+#	gpgsign = true
 [gpg]
 	program = gpg2
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

@@ -212,7 +212,8 @@ autocmd FileType gitcommit setlocal spell
 set t_Co=256
 
 set bg=dark
-colorscheme kolor
+autocmd ColorScheme janah highlight Normal ctermbg=235
+colorscheme janah
 
 " no powerline
 let g:airline_left_sep = "\ue0c6"
@@ -258,7 +259,7 @@ let g:go_term_enabled = 1
 let g:vim_markdown_folding_disabled = 1
 
 " rooter
-let g:rooter_patterns = ['Rakefile', 'docker-compose.yml', 'cmd/', '.git/']
+let g:rooter_patterns = ['Rakefile', 'Dockerfile', 'docker-compose.yml', 'cmd/', '.git/']
 let g:rooter_silent_chdir = 1
 
 " deoplete

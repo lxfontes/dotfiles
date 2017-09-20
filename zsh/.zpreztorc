@@ -15,4 +15,4 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 
 zstyle ':prezto:module:prompt' theme 'kylewest'
 
-#zstyle ':prezto:module:tmux:auto-start' local 'yes'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
