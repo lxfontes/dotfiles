@@ -50,11 +50,12 @@ linux_stuff() {
 }
 
 osx_stuff() {
-  which -s brew
-  if [ $? != 0 ]; then
+  if ! command -v brew; then
     # Install Homebrew
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
+
+  pip3 install --user --upgrade neovim
 }
 
 case `uname -s` in
@@ -78,4 +79,4 @@ curl -s -fLo "${HOME}/.z.sh" \
   https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 mkdir -p $HOME/code/{src,pkg,bin}
-sudo usermod -a -G libvirtd $(whoami)
+#sudo usermod -a -G libvirtd $(whoami)

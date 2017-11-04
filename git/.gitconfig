@@ -14,7 +14,6 @@
   ui = auto
 
 [alias]
-  balme = blame
   hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
@@ -29,19 +28,30 @@
   l = log --graph --date=short
   recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   simple = log --pretty=format:\" * %s\"
-  mt = mergetool
   br = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+  squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
+  pushf = push --force-with-lease
 
 [format]
     pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
+[diff]
+  tool = code
+
+[difftool "code"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+
 [merge]
-  tool = vimdiff
-  conflictstyle = diff3
+  tool = p4merge
   summary = true
-  verbosity = 1
   log = true
   prompt = false
+
+[mergetool "p4merge"]
+  cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "\"$PWD/$BASE\"" "\"$PWD/$REMOTE\"" "\"$PWD/$LOCAL\"" "\"$PWD/$MERGED\""
+  keepTemporaries = false
+  trustExitCode = false
+  keepBackup = false
 
 [apply]
     whitespace = nowarn
