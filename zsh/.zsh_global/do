@@ -2,4 +2,8 @@ do_docker_catalog() {
   curl -s 'https://docker.internal.digitalocean.com/v2/_catalog' | python -mjson.tool
 }
 
+do_cthulhu() {
+  cd $HOME/code/src/github.internal.digitalocean.com/digitalocean/cthulhu
+}
+
 export KITCHEN_LOCAL_YAML=$HOME/.kitchen/config.yml

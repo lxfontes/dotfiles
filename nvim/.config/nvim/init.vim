@@ -250,6 +250,9 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+let g:go_fmt_options = {
+  \ 'goimports': '-local do/',
+  \ }
 let g:go_list_type = "locationlist"
 let g:go_auto_type_info = 0
 let g:go_echo_command_info= 0
@@ -260,7 +263,7 @@ let g:go_term_enabled = 1
 let g:vim_markdown_folding_disabled = 1
 
 " rooter
-let g:rooter_patterns = ['Rakefile', 'Dockerfile', 'docker-compose.yml', 'cmd/', '.git/']
+let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', '.git/' ]
 let g:rooter_silent_chdir = 1
 
 " deoplete
