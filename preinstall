@@ -80,8 +80,5 @@ if [ ! -d "${HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${HOME}/.zprezto"
 fi
 
-curl -s -fLo "${HOME}/.z.sh" \
-  https://raw.githubusercontent.com/rupa/z/master/z.sh
-
 mkdir -p $HOME/code/{src,pkg,bin}
 #sudo usermod -a -G libvirtd $(whoami)
