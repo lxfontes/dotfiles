@@ -1,10 +1,11 @@
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
+  'history' \
   'completion' \
+  'syntax-highlighting' \
   'environment' \
   'terminal' \
   'editor' \
-  'history' \
   'directory' \
   'spectrum' \
   'utility' \

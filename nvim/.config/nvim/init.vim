@@ -260,6 +260,7 @@ let g:go_list_type = "locationlist"
 let g:go_auto_type_info = 0
 let g:go_echo_command_info= 0
 let g:go_term_enabled = 1
+let g:go_build_tags = 'k8saasintegration integration'
 
 
 " markdown

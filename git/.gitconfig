@@ -58,7 +58,7 @@
 [branch]
     autosetupmerge = true
 [push]
-    default = tracking
+    default = current
 [rerere]
     enabled = true
 [core]
