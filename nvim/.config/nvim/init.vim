@@ -6,6 +6,7 @@ set noshowmode
 set ttyfast
 
 " 24 bit
+let base16colorspace=256
 set termguicolors
 
 set backspace=indent,eol,start
@@ -83,6 +84,7 @@ set wildignore+=node_modules/*
 call plug#begin('~/.nvim/plugged')
 " autocomplete
 Plug 'vim-syntastic/syntastic'
+Plug 'chriskempson/base16-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " tools
@@ -238,6 +240,7 @@ let g:syntastic_auto_loc_list=0
 " still populate it
 let g:syntastic_always_populate_loc_list = 1
 
+let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
@@ -270,8 +273,6 @@ let g:rooter_silent_chdir = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#disable_auto_complete = 1
 let g:deoplete#enable_smart_case = 1
-" needed so it doesn't override vim-go cmdline after completion
-call deoplete#custom#set('_', 'converters', ['converter_auto_paren'])
 
 " only show stuff coming from tags, buffers, etc (not random text that is around)
 let b:deoplete_ignore_sources = ['around', 'member', 'buffer']

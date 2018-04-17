@@ -18,13 +18,13 @@ conky.config = {
 	border_outer_margin = 0,
 	alignment = 'bottom_right',
 	gap_x = 10,
-	gap_y = 10,
+	gap_y = 50,
 	draw_shades = false,
 	draw_outline = false,
 	draw_borders = false,
 	draw_graph_borders = false,
 	use_xft = true,
-	font = 'Ubuntu Mono:size=12',
+	font = 'Ubuntu Mono:size=10',
 	xftalpha = 0.8,
 	uppercase = false,
 	default_color = '#FFFFFF',
@@ -53,5 +53,5 @@ conky.text = [[
 	${goto 20}${top name 4} ${goto 180}${top pid 4}${goto 235}${top cpu 4}${goto 290}${top mem 4}
 	${goto 20}${top name 5} ${goto 180}${top pid 5}${goto 235}${top cpu 5}${goto 290}${top mem 5}
 	${hr}
-	${font FontAwesome}${font}${voffset -2} ${battery_bar 7,80} ${battery_percent}%${goto 290}${font FontAwesome}${font}${voffset -2} ${time %d/%m/%y}
+	${font FontAwesome}${font}${voffset -2} ${battery_bar 7,80} ${battery_percent}%${goto 270}${font FontAwesome}${font}${voffset -2} ${time %d/%m/%y}
 ]];

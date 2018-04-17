@@ -4,7 +4,12 @@ set -ex
 
 linux_stuff() {
   sudo add-apt-repository -y ppa:neovim-ppa/unstable
+
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
   sudo apt-get update
+
   sudo apt-get install -y \
   ctags \
   zsh \
@@ -30,13 +35,22 @@ linux_stuff() {
   python3-dev \
   python3-setuptools \
   python3-pip \
-  git-crypt
+  git-crypt \
+  autotools-dev \
+  automake \
+  libevent-dev \
+  docker-ce \
+  conky \
+  libncurses-dev
 
   curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && chmod +x docker-machine-driver-kvm2 && sudo mv docker-machine-driver-kvm2 /usr/bin/
 
   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 
   pip3 install --user --upgrade neovim
+
+  sudo usermod -a -G libvirtd $(whoami)
+  sudo usermod -a -G docker $(whoami)
 
   sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
   sudo update-alternatives --config vi
@@ -47,8 +61,8 @@ linux_stuff() {
 
   if [ ! -d /usr/local/go ]; then
     pushd /tmp
-    curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-    tar -xvf go1.9.2.linux-amd64.tar.gz
+    curl -O https://storage.googleapis.com/golang/go1.10.1.linux-amd64.tar.gz
+    tar -xvf go1.10.1.linux-amd64.tar.gz
     sudo mv go /usr/local
     popd
   fi
@@ -81,4 +95,3 @@ if [ ! -d "${HOME}/.zprezto" ]; then
 fi
 
 mkdir -p $HOME/code/{src,pkg,bin}
-#sudo usermod -a -G libvirtd $(whoami)
