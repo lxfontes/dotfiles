@@ -6,18 +6,20 @@ _darwin_stuff() {
   alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 }
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 alias bi='bundle install --path=.bundle/gems'
 alias be='bundle exec'
 
-export GOPATH=$HOME/code
-export PATH=$PATH:$GOPATH/bin
+export GOPATH="$HOME/code"
+export PATH="$PATH:$GOPATH/bin"
 
 alias vi=nvim
 alias vim=nvim
 export EDITOR=nvim
 export VISUAL=nvim
+
+export LS_COLORS="ow=01;36;40"
 
 ## Z
 source $HOME/.z.sh
@@ -27,7 +29,7 @@ alias zz='cd +$(d | fzf -n 2 | cut -f1)'
 eval "$(direnv hook zsh)"
 
 ## rubby
-eval "$(rbenv init -)"
+eval "$(rbenv init - zsh --no-rehash)"
 
 alias hazip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'

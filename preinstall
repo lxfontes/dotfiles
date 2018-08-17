@@ -1,97 +1,13 @@
 #!/bin/bash
-
-set -ex
-
-linux_stuff() {
-  sudo add-apt-repository -y ppa:neovim-ppa/unstable
-
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
-  sudo apt-get update
-
-  sudo apt-get install -y \
-  ctags \
-  zsh \
-  curl \
-  direnv \
-  neovim \
-  rbenv \
-  ngrep \
-  strace \
-  jq \
-  mtr-tiny \
-  xsel \
-  silversearcher-ag \
-  s3cmd \
-  socat \
-  libvirt-bin \
-  qemu-kvm \
-  rlwrap \
-  ruby-build \
-  libssl-dev \
-  python-dev \
-  python-pip \
-  python3-dev \
-  python3-setuptools \
-  python3-pip \
-  git-crypt \
-  autotools-dev \
-  automake \
-  libevent-dev \
-  docker-ce \
-  conky \
-  libncurses-dev
-
-  curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && chmod +x docker-machine-driver-kvm2 && sudo mv docker-machine-driver-kvm2 /usr/bin/
-
-  curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-
-  pip3 install --user --upgrade neovim
-
-  sudo usermod -a -G libvirtd $(whoami)
-  sudo usermod -a -G docker $(whoami)
-
-  sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-  sudo update-alternatives --config vi
-  sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-  sudo update-alternatives --config vim
-  sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-  sudo update-alternatives --config editor
-
-  if [ ! -d /usr/local/go ]; then
-    pushd /tmp
-    curl -O https://storage.googleapis.com/golang/go1.10.1.linux-amd64.tar.gz
-    tar -xvf go1.10.1.linux-amd64.tar.gz
-    sudo mv go /usr/local
-    popd
-  fi
-}
-
-osx_stuff() {
-  if ! command -v brew; then
-    # Install Homebrew
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-
-  pip3 install --user --upgrade neovim
-}
-
-case `uname -s` in
-  Darwin)
-    osx_stuff
-    ;;
-  Linux)
-    linux_stuff
-    ;;
-  **)
-    echo "wut?"
-    exit 1
-    ;;
-esac
+set -eu
 
 if [ ! -d "${HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${HOME}/.zprezto"
 fi
 
 mkdir -p $HOME/code/{src,pkg,bin}
+
+# Install Homebrew
+if ! command -v brew; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
