@@ -1,7 +1,12 @@
-all: preinstall stow-all-the-things postinstall
+APPS = ag ctags git gnupg input nvim psql ruby ssh tmux zsh alacritty
 
-stow-all-the-things:
-	echo generic
+all: preinstall link postinstall
+
+dry-run:
+	stow -v -n -t $(HOME) $(APPS)
+
+link:
+	stow -v -t $(HOME) $(APPS)
 
 preinstall:
 	./preinstall
@@ -9,4 +14,4 @@ preinstall:
 postinstall:
 	./postinstall
 
-.PHONY: preinstall postinstall stow-all-the-things
+.PHONY: preinstall postinstall link dry-run
