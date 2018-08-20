@@ -20,8 +20,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 ## Z
-source $HOME/.z.sh
-alias zz='cd +$(d | fzf -n 2 | cut -f1)'
+eval "$(jump shell --bind=z)"
 
 ## direnv.net
 eval "$(direnv hook zsh)"

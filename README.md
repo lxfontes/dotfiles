@@ -1,9 +1,13 @@
 # yet another dotfiles repo
 
+### Secure storage
 
-## Post Install
+Besides encrypting the entire disk, I also use an encrypted loopback image for
+personal files.
 
-Left a few things to be done by hand.
-
-Check [Post Install](postinstall.md).
-
+    hdiutil create \
+        -encryption -stdinpass \
+        -type SPARSE -fs HFS+J \
+        -volname Secure \
+        -size 100g \
+        Secure.sparseimage

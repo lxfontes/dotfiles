@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -eu
+
+[ "${USER}" != "root" ] && chsh -s "$(grep zsh /etc/shells | tail -1)"
