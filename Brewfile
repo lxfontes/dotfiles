@@ -1,9 +1,17 @@
 cask_args appdir: '/Applications'
 
+tap "aybabtme/tap"
+brew "aybabtme/tap/dorepl"
+
 brew 'ack'
 brew 'ripgrep'
+brew "vault", args: ["with-dynamic"]
 brew 'apktool'
 brew 'binutils'
+brew "dnsmasq", restart_service: true
+brew "doctl"
+brew "dos2unix"
+brew "kafkacat"
 brew 'coreutils'
 brew 'ctags'
 brew 'curl'
@@ -41,10 +49,14 @@ brew 'direnv'
 brew 'git-crypt'
 brew 'tree'
 brew 'neovim'
+brew "pinentry-mac"
+brew "protobuf"
+brew "redis", restart_service: true
 brew 'kubernetes-cli'
 brew 'dep'
-brew 'redis'
 brew 'git-lfs'
+brew "shellcheck"
+brew "watch"
 
 cask 'google-chrome'
 cask 'slack'
@@ -56,5 +68,9 @@ cask 'docker'
 cask 'spotify'
 cask 'dropbox'
 cask 'whatsapp'
+cask "google-cloud-sdk"
+cask "sequel-pro"
 cask 'telegram'
 cask 'trailer'
+cask "transmission"
+cask "unetbootin"
