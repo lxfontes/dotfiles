@@ -4,6 +4,7 @@ tap "aybabtme/tap"
 brew "aybabtme/tap/dorepl"
 
 brew 'ack'
+brew 'gpg'
 brew 'ripgrep'
 brew "vault", args: ["with-dynamic"]
 brew 'apktool'
@@ -74,3 +75,5 @@ cask 'telegram'
 cask 'trailer'
 cask "transmission"
 cask "unetbootin"
+
+mas "1Password", id: 443987910
