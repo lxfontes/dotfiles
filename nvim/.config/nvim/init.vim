@@ -19,7 +19,16 @@ set autoindent
 
 set mouse=a
 
-set clipboard+=unnamedplus
+set clipboard^=unnamed
+set clipboard^=unnamedplus
+
+" ~/.viminfo needs to be writable and readable
+set viminfo='200
+
+if has('persistent_undo')
+  set undofile
+  set undodir=~/.cache/vim
+endif
 
 " ctrl-a ctrl-x behaviour
 set nrformats-=octal
