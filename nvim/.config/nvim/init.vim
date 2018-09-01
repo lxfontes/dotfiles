@@ -92,7 +92,7 @@ set wildignore+=node_modules/*
 
 call plug#begin('~/.nvim/plugged')
 " autocomplete
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 Plug 'chriskempson/base16-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 

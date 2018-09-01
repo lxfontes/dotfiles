@@ -62,11 +62,11 @@
 [rerere]
     enabled = true
 [core]
-	excludesfile = /Users/lucas/.gitignore
+	excludesfile = /Users/lfontes/.gitignore
 [commit]
 #	gpgsign = true
 [gpg]
-	program = gpg2
+	program = gpg
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
