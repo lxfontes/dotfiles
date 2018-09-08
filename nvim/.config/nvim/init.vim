@@ -270,7 +270,7 @@ let g:go_build_tags = 'k8saasintegration integration'
 let g:vim_markdown_folding_disabled = 1
 
 " rooter
-let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', '.git/' ]
+let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
 let g:rooter_silent_chdir = 1
 
 " window management
@@ -282,7 +282,7 @@ nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
-nnoremap <silent> <M-p> :TmuxNavigatePrevious<CR>
+nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 
 " ale
 let g:ale_lint_on_text_changed = 0
@@ -350,6 +350,9 @@ vmap // :TComment<CR>
 
 " Toogle dirlist on/off
 nmap <C-e> :NERDTreeToggle<cr>
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
 
 " completion stuff
 imap <expr> <tab>  pumvisible() ? "\<c-n>" : "\<tab>"
