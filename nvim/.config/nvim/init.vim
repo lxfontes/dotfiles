@@ -95,6 +95,7 @@ call plug#begin('~/.nvim/plugged')
 " Plug 'w0rp/ale'
 Plug 'chriskempson/base16-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+:
 
 " tools
 Plug 'valloric/listtoggle'
@@ -140,6 +141,10 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 call plug#end()
 
 set rtp+=$HOME/.nvim/plugged/vim-go/syntax
@@ -293,7 +298,6 @@ let g:ale_go_gobuild_options  = '-tags "k8saasintegration integration"'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni#functions    = {}
 let g:deoplete#enable_smart_case = 1
 
 " only show stuff coming from tags, buffers, etc (not random text that is around)
@@ -355,9 +359,26 @@ nmap <C-e> :NERDTreeToggle<cr>
 noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
 
 " completion stuff
-imap <expr> <tab>  pumvisible() ? "\<c-n>" : "\<tab>"
+" snippets
+" neosnippet
+set conceallevel=2
+set concealcursor=niv
+
+" use <tab> and <s-tab> to cycle through completion options
+" this might be weird
+imap <expr> <tab>
+ \ pumvisible() ? "\<c-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
 imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-imap <expr> <cr>    pumvisible() ? deoplete#close_popup() : "\<cr>"
+
+" :help popup-menukeys
+" fixes one of the weird cases for enter <CR>: close popup and save indent.
+imap <expr><silent><CR> pumvisible() ? deoplete#mappings#close_popup() .
+  \ "\<Plug>(neosnippet_jump_or_expand)" : "\<CR>"
+
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " gopherz
 " run :GoBuild or :GoTestCompile based on the go file
