@@ -63,9 +63,9 @@ filetype indent on
 syntax on
 
 set wildmenu
-set wildmode=longest:list,full
+set wildmode=longest:full
 set wildignorecase
-set completeopt=longest,menuone,noinsert
+set completeopt=menu,menuone,noinsert
 
 "stuff to ignore when tab completing
 set wildignore=*.o,*.obj,*~
@@ -92,10 +92,9 @@ set wildignore+=node_modules/*
 
 call plug#begin('~/.nvim/plugged')
 " autocomplete
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'chriskempson/base16-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-:
 
 " tools
 Plug 'valloric/listtoggle'
@@ -264,8 +263,8 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {
-  \ 'goimports': '-local do/',
-  \ }
+ \ 'goimports': '-local do/',
+ \ }
 let g:go_auto_type_info = 0
 let g:go_echo_command_info= 0
 let g:go_term_enabled = 1
@@ -293,8 +292,19 @@ nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_set_quickfix = 1
+let g:ale_set_balloons = 1
 let g:ale_set_loclist = 0
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_linters = {'go': ['golint', 'gobuild', 'gofmt', 'golangserver']}
+let g:ale_go_gometalinter_options = '--fast'
 let g:ale_go_gobuild_options  = '-tags "k8saasintegration integration"'
+let g:ale_go_gofmt_options  = '-s'
+
+
+" For airline integrstion
+let g:airline#extensions#ale#error_symbol = '✖:'
+let g:airline#extensions#ale#warning_symbol = '⚠:'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -305,6 +315,7 @@ let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
 
 let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#use_cache     = 1
+
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -346,9 +357,6 @@ nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>v :vsplit<CR> <C-w><C-w>
 nmap <leader>s :split<CR> <C-w><C-w>
 
-nnoremap <tab> :bn<CR>
-nnoremap <s-tab> :bp<CR>
-
 " comments
 vmap // :TComment<CR>
 
@@ -361,7 +369,7 @@ noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
 " completion stuff
 " snippets
 " neosnippet
-set conceallevel=2
+set conceallevel=1
 set concealcursor=niv
 
 " use <tab> and <s-tab> to cycle through completion options
