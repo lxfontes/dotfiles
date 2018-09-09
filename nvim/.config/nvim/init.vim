@@ -63,9 +63,9 @@ filetype indent on
 syntax on
 
 set wildmenu
-set wildmode=longest:list,full
+set wildmode=longest:full
 set wildignorecase
-set completeopt=longest,menuone,noinsert
+set completeopt=menu,menuone,noinsert
 
 "stuff to ignore when tab completing
 set wildignore=*.o,*.obj,*~
@@ -92,18 +92,21 @@ set wildignore+=node_modules/*
 
 call plug#begin('~/.nvim/plugged')
 " autocomplete
-" Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
 Plug 'chriskempson/base16-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " tools
+Plug 'valloric/listtoggle'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 Plug 'airblade/vim-rooter'
 Plug 'scrooloose/nerdtree'
+Plug 'christoomey/vim-tmux-navigator'
 
 " text manipulation
 Plug 'tomtom/tcomment_vim'
@@ -119,9 +122,9 @@ Plug 'alexgenco/neovim-ruby', { 'for': 'ruby' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
 
 " go
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jodosha/vim-godebug'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-go', { 'do': 'make' }
 
 " html
 Plug 'ap/vim-css-color'
@@ -133,11 +136,14 @@ Plug 'fatih/vim-hclfmt'
 
 " cosmetic
 Plug 'flazz/vim-colorschemes'
-Plug 'jacoborus/tender.vim'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 call plug#end()
 
 set rtp+=$HOME/.nvim/plugged/vim-go/syntax
@@ -231,7 +237,7 @@ colorscheme janah
 let g:airline_left_sep = "\ue0c6"
 let g:airline_right_sep = "\ue0c7"
 
-let g:airline_theme = 'kolor'
+let g:airline_theme = 'atomic'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -239,20 +245,15 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " erb html tags
 let g:closetag_filenames = "*.html.erb,*.html,*.xhtml,*.phtml"
 
-" syntastic
-" mark syntax errors with :signs
-let g:syntastic_enable_signs=1
-" automatically jump to the error when saving the file
-let g:syntastic_auto_jump=0
-" do not show the error list automatically
-let g:syntastic_auto_loc_list=0
-" still populate it
-let g:syntastic_always_populate_loc_list = 1
+" gitgutter
+let g:gitgutter_sign_added            = '+'
+let g:gitgutter_sign_modified         = '»'
+let g:gitgutter_sign_removed          = '_'
+let g:gitgutter_sign_modified_removed = '»╌'
 
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+" toggle quickfix / location
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 " go
 let g:go_highlight_functions = 1
@@ -262,29 +263,58 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {
-  \ 'goimports': '-local do/',
-  \ }
-let g:go_list_type = "locationlist"
+ \ 'goimports': '-local do/',
+ \ }
 let g:go_auto_type_info = 0
 let g:go_echo_command_info= 0
 let g:go_term_enabled = 1
 let g:go_build_tags = 'k8saasintegration integration'
 
-
 " markdown
 let g:vim_markdown_folding_disabled = 1
 
 " rooter
-let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', '.git/' ]
+let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
 let g:rooter_silent_chdir = 1
+
+" window management
+" Move between Vim windows and Tmux panes
+" - It requires the corresponding configuration into Tmux.
+" - Plugin required: https://github.com/christoomey/vim-tmux-navigator
+let g:tmux_navigator_no_mappings = 0
+nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
+nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
+
+" ale
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
+let g:ale_set_quickfix = 1
+let g:ale_set_balloons = 1
+let g:ale_set_loclist = 0
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_linters = {'go': ['golint', 'gobuild', 'gofmt', 'golangserver']}
+let g:ale_go_gometalinter_options = '--fast'
+let g:ale_go_gobuild_options  = '-tags "k8saasintegration integration"'
+let g:ale_go_gofmt_options  = '-s'
+
+
+" For airline integrstion
+let g:airline#extensions#ale#error_symbol = '✖:'
+let g:airline#extensions#ale#warning_symbol = '⚠:'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#disable_auto_complete = 1
 let g:deoplete#enable_smart_case = 1
 
 " only show stuff coming from tags, buffers, etc (not random text that is around)
 let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
+
+let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#use_cache     = 1
 
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -311,9 +341,10 @@ nmap <leader>w <C-w><C-w>_
 "remove extra white space from line end
 noremap <leader>s :%s/\s\+$//g<CR>
 " Use <C-L> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <leader>l :set hlsearch! hlsearch?<CR>
+nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR>
 " ctrl-p
 nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <C-o> :Commands<CR>
 nnoremap <leader><space> :Buffers<CR>
 " tagbar
 nmap <leader><Enter> :TagbarToggle<CR>
@@ -326,26 +357,36 @@ nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>v :vsplit<CR> <C-w><C-w>
 nmap <leader>s :split<CR> <C-w><C-w>
 
-nnoremap <tab> :bn<CR>
-nnoremap <s-tab> :bp<CR>
-
 " comments
 vmap // :TComment<CR>
 
 " Toogle dirlist on/off
-nmap <leader>\ :NERDTreeToggle<cr>
+nmap <C-e> :NERDTreeToggle<cr>
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
 
 " completion stuff
-imap <silent><expr> <TAB>
-		\ pumvisible() ? "\<C-n>" :
-		\ <SID>check_back_space() ? "\<TAB>" :
-		\ deoplete#mappings#manual_complete()
-		function! s:check_back_space() abort "{{{
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~ '\s'
-		endfunction"}}}
+" snippets
+" neosnippet
+set conceallevel=1
+set concealcursor=niv
+
+" use <tab> and <s-tab> to cycle through completion options
+" this might be weird
+imap <expr> <tab>
+ \ pumvisible() ? "\<c-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
 imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-imap <expr> <cr>    pumvisible() ? deoplete#close_popup() : "\<cr>"
+
+" :help popup-menukeys
+" fixes one of the weird cases for enter <CR>: close popup and save indent.
+imap <expr><silent><CR> pumvisible() ? deoplete#mappings#close_popup() .
+  \ "\<Plug>(neosnippet_jump_or_expand)" : "\<CR>"
+
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " gopherz
 " run :GoBuild or :GoTestCompile based on the go file
