@@ -369,7 +369,7 @@ noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
 " completion stuff
 " snippets
 " neosnippet
-set conceallevel=1
+set conceallevel=0
 set concealcursor=niv
 
 " use <tab> and <s-tab> to cycle through completion options

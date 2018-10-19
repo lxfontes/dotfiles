@@ -15,6 +15,10 @@ sudo pmset -a standbydelay 86400
 # Set highlight color to green
 defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
+# disable press and hold ( i write without cedil and accents lol )
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+
 # Set sidebar icon size to medium
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
@@ -326,6 +330,10 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$PWD/iTerm"
 # Tell iTerm2 to use the custom preferences in the directory
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+# ShiftIt
+# resize by 1/3 instead of 1/2
+defaults write org.shiftitapp.ShiftIt multipleActionsCycleWindowSizes YES
 
 # make sure we don't lock ourself out. brew doesn't touch shells
 grep /usr/local/bin/zsh /etc/shells || (echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells)
