@@ -1,413 +1,346 @@
-autocmd!
-let mapleader=" "
-
-set nocompatible
-set noshowmode
-set ttyfast
-
-" 24 bit
-set termguicolors
-
-set backspace=indent,eol,start
-set complete-=i
-
-" easier regex
-set magic
-
-set autoindent
-
-set mouse=a
-
-set clipboard^=unnamed
-set clipboard^=unnamedplus
-
-" ~/.viminfo needs to be writable and readable
-set viminfo='200
-
-if has('persistent_undo')
-  set undofile
-  set undodir=~/.cache/vim
-endif
-
-" ctrl-a ctrl-x behaviour
-set nrformats-=octal
-set sidescrolloff=5
-set encoding=utf-8
-
-" searches show in middle of screen
-set scrolloff=3
-set scrolljump=5
-
-" automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd =
-
-"stop being annoying
-set visualbell
-
-"Ignore case when searching
-set ignorecase
-set smartcase
-
-"Highlight search things
-set hlsearch
-
-"do not clear the screen on exit
-set t_ti= t_te=
-
-set incsearch
-set showmatch
-
-filetype plugin on
-filetype indent on
+set nocompatible " vim, not vi
+filetype off
+filetype plugin indent on
 syntax on
 
-set wildmenu
-set wildmode=longest:full
-set wildignorecase
-set completeopt=menu,menuone,noinsert
+" plugins
+let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+if !filereadable(vimplug_exists)
+	echo "Installing Vim-Plug..."
+	echo ""
+	silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall
+endif
 
-"stuff to ignore when tab completing
-set wildignore=*.o,*.obj,*~
-set wildignore+=*vim/backups*
-set wildignore+=*sass-cache*
-set wildignore+=vendor/rails/**
-set wildignore+=vendor/cache/**
-set wildignore+=*.gem
-set wildignore+=.git/**
-set wildignore+=public/assets/**
-set wildignore+=vendor/**
-set wildignore+=log/**
-set wildignore+=tmp/**
-set wildignore+=Cellar/**
-set wildignore+=app/assets/images/**
-set wildignore+=_site/**
-set wildignore+=home/.vim/bundle/**
-set wildignore+=pkg/**
-set wildignore+=**/.gitkeep
-set wildignore+=**/.DS_Store
-set wildignore+=**/*.netrw*
-set wildignore+=node_modules/*
+call plug#begin('~/.vim/plugged')
 
-
-call plug#begin('~/.nvim/plugged')
-" autocomplete
-Plug 'w0rp/ale'
-Plug 'chriskempson/base16-vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" tools
-Plug 'valloric/listtoggle'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'w0rp/ale'
+Plug 'godlygeek/tabular'
+Plug 'tpope/vim-fugitive'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-unimpaired'
 Plug 'airblade/vim-gitgutter'
-Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-surround'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'vimwiki/vimwiki'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ervandew/supertab'
 Plug 'airblade/vim-rooter'
-Plug 'scrooloose/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 
-" text manipulation
-Plug 'tomtom/tcomment_vim'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'tpope/vim-surround'
-
-" ruby
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'alexgenco/neovim-ruby', { 'for': 'ruby' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
-
-" go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'jodosha/vim-godebug'
 Plug 'zchee/deoplete-go', { 'do': 'make' }
-
-" html
-Plug 'ap/vim-css-color'
-Plug 'vim-scripts/closetag.vim'
 
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-hclfmt'
 
+" go
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+
 " cosmetic
 Plug 'flazz/vim-colorschemes'
-Plug 'ryanoasis/vim-devicons'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-call plug#end()
-
-set rtp+=$HOME/.nvim/plugged/vim-go/syntax
-
-" statusline
-set laststatus=2
-
-function! HighlightSearch()
-  if &hls
-    return 'H'
-  else
-    return ''
-  endif
-endfunction
-
-" Make it obvious
-set textwidth=140
-set colorcolumn=121
-
-" Numbers
-set number
-set numberwidth=3
-
-" open files not tied to buffers
-set hidden
-
-
-set shortmess+=c
-
-" no regerts
-set nobackup
-set nowb
-
-set title
-set cursorline
-
-" do not wrap long lines
-set nowrap
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it for commit messages, when the position is invalid, or when
-" inside an event handler (happens when dropping a file on gvim).
-autocmd BufReadPost *
-\ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-\   exe "normal g`\"" |
-\ endif
-
-" Softtabs, 2 spaces
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set smarttab
-
-" Display extra whitespace
-set list listchars=tab:\ \ ,trail:·,extends:>,precedes:<,nbsp:+
-
-" Highlight listchars
-"highlight SpecialKey ctermbg=red guibg=red
-
-" css
-" Allow stylesheets to autocomplete hyphenated words
-autocmd FileType css,scss,sass setlocal iskeyword+=-
-
-" ruby mappings
-au BufRead,BufNewFile *.pill set ft=ruby
-au BufRead,BufNewFile Gemfile set ft=ruby
-au BufRead,BufNewFile Appraisals set filetype=ruby
-
-" EJSON
-au BufNewFile,BufRead *.ejson set filetype=json
+" ruby
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
 " html
-au! BufRead,BufNewFile *.ejs setfiletype html
+Plug 'ap/vim-css-color'
+Plug 'vim-scripts/closetag.vim'
 
-" markdown
-au BufRead,BufNewFile *.md set filetype=markdown
-au BufRead,BufNewFile *.md setlocal textwidth=120
-au FileType markdown setlocal spell
+call plug#end()
 
-autocmd FileType gitcommit setlocal spell
+" general
 
-"enable 256 colors
-set t_Co=256
+let mapleader=' '                                        " command leader
+set nobackup                                             " don't store backup files
+set nowritebackup                                        " don't even write backup files during file saving
+set viminfo='200                                         " file history
+set undofile                                             " turn on per file undo
+set undodir=~/.cache/nvim/                               " store undo files in this dir
+set number                                               " show line numbers
+set numberwidth=3                                        " always spare 3 chars for line numbers
+set autoindent                                           " self explanatory
+set cursorline                                           " show current line
+set title                                                " modify terminal title
+set textwidth=140                                        " big screen
+set colorcolumn=121                                      " 120 is the new 80
+set wildmenu                                             " enable wildmenu
+set wildignorecase                                       " ignore case in wildmenu
+set wildmode=list:longest,list:full                      " makes wildmenu readable
+set completeopt=menu,menuone,noinsert                    " always display completion, never pick a default
+set mouse=a                                              " enable mouse in all modes
+set hidden                                               " hide buffers instead of deleting them
+set encoding=utf-8                                       " character encoding
+set visualbell                                           " no bell
+set belloff+=ctrlg                                       " also silence during completion
+set t_ti= t_te=                                          " do not clear the screen on exit
+set history=1000                                         " command history
+set ignorecase                                           " ignore case on searches
+set incsearch                                            " incremental search
+set noshowmode                                           " mode is already in statusline
+set lazyredraw                                           " do not redraw while executing macros
+set backspace=indent,eol,start                           " neovims default
+set clipboard^=unnamed                                   " prefer system clipboard
+set clipboard^=unnamedplus                               " prefer system clipboard (without using custom registers)
+set termguicolors                                        " 24-bit support
+set shortmess+=c                                         " hide completion messages like 'pattern not found', etc
+set showbreak=↪\                                         " used in line wraps
+set listchars=tab:»·,nbsp:+,trail:·,extends:→,precedes:← " catch special characters
+set showcmd                                              " show partial commands, it also interacts with vim-go's completion :/
+set complete-=i                                          " do not scan included files during completion
+set hlsearch                                             " highlight search as typing
+set signcolumn=yes                                       " always display sign column used by gitgutter
+set nojoinspaces                                         " do not add spaces when joining lines ending in punctuation
+
 
 set bg=dark
-colorscheme onedark
+colorscheme janah
 
-" no powerline
-let g:airline_left_sep = "\ue0c6"
-let g:airline_right_sep = "\ue0c7"
+nnoremap gsv :so $MYVIMRC<CR>                            " reload vimrc
+noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m    " Remove the Windows ^M - when the encodings gets messed up
+vmap // :TComment<CR>                                    " comments
+nmap <leader>w <C-w><C-w>_                               " Make it way easier to switch windows (<leader>w)
+noremap <leader>s :%s/\s\+$//g<CR>                       " remove extra white space from line ends
+nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR> " clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <C-o> :Commands<CR>
+nnoremap <leader><space> :Buffers<CR>
+nmap <leader>a :Ag<space>                                " search
+nmap <leader>v :vsplit<CR> <C-w><C-w>                    " split vertically with <leader> v
+nmap <leader>s :split<CR> <C-w><C-w>                     " split horizontally with <leader> s
+nnoremap <silent> <leader>ag :Ag <C-R><C-W><CR>
 
-let g:airline_theme = 'bubblegum'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+nnoremap n nzzzv                                         " (override) takes search occurrences to the middle of the screen
+nnoremap N Nzzzv
 
-" erb html tags
-let g:closetag_filenames = "*.html.erb,*.html,*.xhtml,*.phtml"
+nnoremap f /
 
-" gitgutter
-let g:gitgutter_sign_added            = '+'
-let g:gitgutter_sign_modified         = '»'
-let g:gitgutter_sign_removed          = '_'
-let g:gitgutter_sign_modified_removed = '»╌'
+map q: :echo "you are not quitting, lol"<cr>
 
-" toggle quickfix / location
-let g:lt_location_list_toggle_map = '<leader>l'
-let g:lt_quickfix_list_toggle_map = '<leader>q'
+augroup behaviour
+	" css
+	" adjust word boundary ('w' movement) to stop on dashes, otherwise completion wont work
+	autocmd FileType css,scss,sass setlocal iskeyword+=-
 
-" go
+	" ruby mappings
+	au BufRead,BufNewFile *.pill set ft=ruby
+	au BufRead,BufNewFile Gemfile set ft=ruby
+	au BufRead,BufNewFile Appraisals set filetype=ruby
+
+	" EJSON
+	au BufNewFile,BufRead *.ejson set filetype=json
+
+	" html
+	au! BufRead,BufNewFile *.ejs setfiletype html
+
+	" markdown
+	au BufRead,BufNewFile *.md set filetype=markdown
+	au BufRead,BufNewFile *.md setlocal textwidth=120
+	au FileType markdown setlocal spell
+
+	autocmd FileType gitcommit setlocal spell
+augroup END
+
+augroup behaviour
+	autocmd VimResized * :wincmd = " automatically rebalance windows on vim resize
+
+	"stuff to ignore when tab completing
+	set wildignore=*.o,*.obj,*~
+	set wildignore+=*vim/backups*
+	set wildignore+=*sass-cache*
+	set wildignore+=vendor/rails/**
+	set wildignore+=vendor/cache/**
+	set wildignore+=*.gem
+	set wildignore+=.git/**
+	set wildignore+=public/assets/**
+	set wildignore+=vendor/**
+	set wildignore+=log/**
+	set wildignore+=tmp/**
+	set wildignore+=Cellar/**
+	set wildignore+=app/assets/images/**
+	set wildignore+=_site/**
+	set wildignore+=home/.vim/bundle/**
+	set wildignore+=pkg/**
+	set wildignore+=**/.gitkeep
+	set wildignore+=**/.DS_Store
+	set wildignore+=**/*.netrw*
+	set wildignore+=node_modules/*
+
+	" Softtabs, 2 spaces
+	set tabstop=2
+	set shiftwidth=2
+	set softtabstop=2
+	set expandtab
+	set smarttab
+augroup END
+
+augroup tabs
+	nnoremap <tab> :bn <cr>
+	nnoremap <s-tab> :bp <cr>
+	nnoremap <silent> <s-t> :new<cr>
+augroup END
+
+augroup completion
+  " keeping this around in case supertab fails...
+  " function! LOLTab()
+  "   if pumvisible()
+  "     return "\<c-n>"
+  "   endif
+  "
+  "   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+  "     return "\<tab>"
+  "   elseif exists('&omnifunc') && &omnifunc != ''
+  "     return "\<c-x>\<c-o>"
+  "   else
+  "     return "\<c-n>"
+  "   endif
+  " endfunction
+  "
+	" use <tab> and <s-tab> to cycle through completion options
+	" and <cr> to complete
+	" this might be weird
+	" inoremap <silent><expr> <tab> LOLTab()
+	" s-tab goes to previous
+  "	inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+ 
+	" enter takes the selected option
+  inoremap <silent><expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
+
+	autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+augroup END
+
+augroup cursorline
+	autocmd!
+	" remember cursor position. Don't do it for commit messages, when the position is invalid, or when
+	" inside an event handler (happens when dropping a file on gvim).
+	autocmd BufReadPost * if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |   exe "normal g`\"" | endif
+
+	" only show cursorline in active split/window
+	autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+	autocmd WinLeave * setlocal nocursorline
+augroup END
+
+
+" vim-go
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+	let l:file = expand('%')
+	if l:file =~# '^\f\+_test\.go$'
+		call go#test#Test(0, 1)
+	elseif l:file =~# '^\f\+\.go$'
+		call go#cmd#Build(0)
+	endif
+endfunction
+
+let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_fmt_command = "goimports"
-let g:go_fmt_options = {
- \ 'goimports': '-local do/',
- \ }
-let g:go_auto_type_info = 0
-let g:go_echo_command_info= 0
-let g:go_term_enabled = 1
-let g:go_build_tags = 'k8saasintegration integration'
+let g:go_highlight_structs = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_space_tab_error = 0
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_extra_types = 1
 
-" markdown
-let g:vim_markdown_folding_disabled = 1
+augroup go
+	au!
+	au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+	au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+	au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+	au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+
+	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
+	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
+	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+
+	au FileType go nmap <leader>r  <Plug>(go-run)
+	au FileType go nmap <leader>t  <Plug>(go-test)
+	au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
+	au FileType go nmap <Leader>i <Plug>(go-info)
+	au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
+	au FileType go nmap <C-g> :GoDecls<cr>
+	au FileType go nmap <leader>dr :GoDeclsDir<cr>
+	au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
+	au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
+	au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
+
+  " create a go doc comment based on the word under the cursor
+  function! s:create_go_doc_comment()
+    norm "zyiw
+    execute ":norm O// "
+    norm "zp
+    execute ":norm A ..."
+  endfunction
+  nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>
+augroup END
+
+" airline
+let g:airline_theme = 'onedark'
+let g:airline_extensions = ['branch', 'tabline', 'ale']
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#ale#error_symbol = '✖ '
+let g:airline#extensions#ale#warning_symbol = '⚠ '
+
+" w0rp/ale
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
+let g:ale_set_quickfix = 1
+let g:ale_set_balloons = 0
+let g:ale_set_loclist = 0
+let g:ale_linters = {'go': ['gometalinter', 'gofmt' ]}
+let g:ale_go_gometalinter_options = '--fast'
+let g:ale_go_gobuild_options  = '-tags "integration"'
+let g:ale_go_gofmt_options  = '-s'
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
+let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#use_cache     = 1
+
+
+" git gutter
+let g:gitgutter_sign_added            = '✚'
+let g:gitgutter_sign_modified         = '▸'
+let g:gitgutter_sign_removed          = '✄'
+let g:gitgutter_sign_modified_removed = '✂︎'
 
 " rooter
 let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
 let g:rooter_silent_chdir = 1
 
-" window management
-" Move between Vim windows and Tmux panes
-" - It requires the corresponding configuration into Tmux.
-" - Plugin required: https://github.com/christoomey/vim-tmux-navigator
+" utilsnips
+let g:SuperTabDefaultCompletionType = "context"
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
+
+" tmux navigator
+" also goes on tmux side & iterm
 let g:tmux_navigator_no_mappings = 0
 nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
-
-" ale
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_save = 1
-let g:ale_set_quickfix = 1
-let g:ale_set_loclist = 0
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
-let g:ale_linters = {'go': ['gometalinter', 'gofmt']}
-let g:ale_go_gometalinter_options = '--fast'
-let g:ale_go_gobuild_options  = '-tags "integration"'
-let g:ale_go_gofmt_options  = '-s'
-
-
-" For airline integrstion
-let g:airline#extensions#ale#error_symbol = '✖'
-let g:airline#extensions#ale#warning_symbol = '⚠'
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-" only show stuff coming from tags, buffers, etc (not random text that is around)
-let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
-
-let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache     = 1
-
-
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" NERDTree
-let NERDTreeDirArrows=1
-let NERDTreeMinimalUI=1
-let NERDTreeIgnore=['\.o$', '\.pyc$', '\.php\~$']
-let NERDTreeWinSize = 35
-
-" Make sure that when NT root is changed, Vim's pwd is also updated
-let NERDTreeShowLineNumbers = 1
-
-" Open NERDTree on startup, when no file has been specified
-autocmd VimEnter * if !argc() | NERDTree | endif
-
-" Bindings
-" terminal
-tnoremap kj <C-\><C-n>
-
-" Normal
-" Make it way easier to switch windows (<leader>w)
-nmap <leader>w <C-w><C-w>_
-"remove extra white space from line end
-noremap <leader>s :%s/\s\+$//g<CR>
-" Use <C-L> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR>
-" ctrl-p
-nnoremap <silent> <C-p> :FZF<CR>
-nnoremap <silent> <C-o> :Commands<CR>
-nnoremap <leader><space> :Buffers<CR>
-" tagbar
-nmap <leader><Enter> :TagbarToggle<CR>
-" search
-nmap <leader>a :Ag<space>
-" git gutter toggle
-nmap <leader>g :GitGutterToggle<CR>
-" split vertically with <leader> v
-" split horizontally with <leader> s
-nmap <leader>v :vsplit<CR> <C-w><C-w>
-nmap <leader>s :split<CR> <C-w><C-w>
-
-" comments
-vmap // :TComment<CR>
-
-" Toogle dirlist on/off
-nmap <C-e> :NERDTreeToggle<cr>
-
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
-
-" completion stuff
-" snippets
-" neosnippet
-set conceallevel=0
-set concealcursor=niv
-
-" use <tab> and <s-tab> to cycle through completion options
-" this might be weird
-imap <expr> <tab>
- \ pumvisible() ? "\<c-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-
-imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-
-" :help popup-menukeys
-" fixes one of the weird cases for enter <CR>: close popup and save indent.
-imap <expr><silent><CR> pumvisible() ? deoplete#mappings#close_popup() .
-  \ "\<Plug>(neosnippet_jump_or_expand)" : "\<CR>"
-
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-
-" gopherz
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#cmd#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-augroup go
-  autocmd!
-
-  autocmd FileType go nmap <silent> <Leader>i <Plug>(go-info)
-  autocmd FileType go nmap <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
-  autocmd FileType go nmap <silent> <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap <silent> <leader>r  <Plug>(go-run)
-
-  autocmd FileType go nmap <silent> <Leader>d <Plug>(go-doc)
-  autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
-
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-augroup END
