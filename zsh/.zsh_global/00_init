@@ -6,7 +6,7 @@ _darwin_stuff() {
   alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 }
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
 
 alias bi='bundle install --path=.bundle/gems'
 alias be='bundle exec'
