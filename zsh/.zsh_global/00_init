@@ -19,6 +19,9 @@ alias vim=nvim
 export EDITOR=nvim
 export VISUAL=nvim
 
+alias k=kubectl
+source <(kubectl completion zsh)
+
 ## Z
 eval "$(jump shell --bind=z)"
 
@@ -34,10 +37,6 @@ alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
 
 bindkey "^r" history-incremental-pattern-search-backward
 KEYTIMEOUT=1
-
-kp() {
-  kubectl get pod -l $1 -o name | cut -d/ -f2-
-}
 
 case `uname -s` in
   Darwin)

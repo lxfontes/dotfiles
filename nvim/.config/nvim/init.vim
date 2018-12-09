@@ -6,7 +6,6 @@ set noshowmode
 set ttyfast
 
 " 24 bit
-let base16colorspace=256
 set termguicolors
 
 set backspace=indent,eol,start
@@ -230,14 +229,13 @@ autocmd FileType gitcommit setlocal spell
 set t_Co=256
 
 set bg=dark
-autocmd ColorScheme janah highlight Normal ctermbg=235
-colorscheme janah
+colorscheme onedark
 
 " no powerline
 let g:airline_left_sep = "\ue0c6"
 let g:airline_right_sep = "\ue0c7"
 
-let g:airline_theme = 'atomic'
+let g:airline_theme = 'bubblegum'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -292,19 +290,18 @@ nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
 let g:ale_set_quickfix = 1
-let g:ale_set_balloons = 1
 let g:ale_set_loclist = 0
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
-let g:ale_linters = {'go': ['golint', 'gobuild', 'gofmt', 'golangserver']}
+let g:ale_linters = {'go': ['gometalinter', 'gofmt']}
 let g:ale_go_gometalinter_options = '--fast'
-let g:ale_go_gobuild_options  = '-tags "k8saasintegration integration"'
+let g:ale_go_gobuild_options  = '-tags "integration"'
 let g:ale_go_gofmt_options  = '-s'
 
 
 " For airline integrstion
-let g:airline#extensions#ale#error_symbol = '✖:'
-let g:airline#extensions#ale#warning_symbol = '⚠:'
+let g:airline#extensions#ale#error_symbol = '✖'
+let g:airline#extensions#ale#warning_symbol = '⚠'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
