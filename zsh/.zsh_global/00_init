@@ -20,7 +20,6 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 alias k=kubectl
-source <(kubectl completion zsh)
 
 ## Z
 eval "$(jump shell --bind=z)"
@@ -29,7 +28,7 @@ eval "$(jump shell --bind=z)"
 eval "$(direnv hook zsh)"
 
 ## rubby
-eval "$(rbenv init -)"
+eval "$(rbenv init - --no-rehash)"
 
 alias hazip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'

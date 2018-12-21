@@ -863,28 +863,10 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
-	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
-	<dict>
-		<key>TB Is Shown</key>
-		<integer>1</integer>
-	</dict>
-	<key>NSUserKeyEquivalents</key>
-	<dict>
-		<key>Next Pane</key>
-		<string>@$[</string>
-		<key>Previous Pane</key>
-		<string>@$[</string>
-	</dict>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>269 415 958 451 0 0 1440 878 </string>
+	<string>269 136 796 486 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 351 810 527 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 2</key>
-	<string>0 351 810 527 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
-	<string>579 66 810 527 0 0 1440 878 </string>
+	<string>0 -1 1680 1028 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_96CABC09-37A6-44A2-A9B5-66DD194BCC64</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_96CABC09-37A6-44A2-A9B5-66DD194BCC64_selection</key>
@@ -1527,15 +1509,13 @@
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
-	<string>115387A7-1B96-4714-B5A1-1ACB51920831</string>
+	<string>110FDE94-1585-4C4B-BFA6-8A9E5CFD23DF</string>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>0</integer>
-	<key>NoSyncPermissionToShowTip</key>
-	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>556480385.927665</real>
+	<real>566196482.22875404</real>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>1</integer>
 	<key>PointerActions</key>
@@ -1572,21 +1552,15 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/lfontes/code/src/github.com/lxfontes/dotfiles/iTerm</string>
+	<string>/Users/lxf/code/src/github.com/lxfontes/dotfiles/iTerm</string>
 	<key>Print In Black And White</key>
-	<true/>
-	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=67</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=54</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
-	<key>SULastCheckTime</key>
-	<date>2018-09-08T15:55:48Z</date>
-	<key>SUSendProfileInfo</key>
-	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>StretchTabsToFillBar</key>
@@ -1601,10 +1575,12 @@
 	<false/>
 	<key>UseLionStyleFullscreen</key>
 	<false/>
+	<key>disableMetalWhenUnplugged</key>
+	<false/>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.2.0</string>
+	<string>3.2.6</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

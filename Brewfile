@@ -4,6 +4,7 @@ tap "aybabtme/tap"
 brew "aybabtme/tap/dorepl"
 
 brew 'ack'
+brew 'jump'
 brew 'gpg'
 brew 'ripgrep'
 brew "vault", args: ["with-dynamic"]
