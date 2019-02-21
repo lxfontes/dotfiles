@@ -21,7 +21,7 @@ Plug 'godlygeek/tabular'
 Plug 'tpope/vim-fugitive'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-unimpaired'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-surround'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'vimwiki/vimwiki'
@@ -110,7 +110,7 @@ vmap // :TComment<CR>                                    " comments
 nmap <leader>w <C-w><C-w>_                               " Make it way easier to switch windows (<leader>w)
 noremap <leader>s :%s/\s\+$//g<CR>                       " remove extra white space from line ends
 nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR> " clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <C-o> :Commands<CR>
 nnoremap <leader><space> :Buffers<CR>
 nmap <leader>a :Ag<space>                                " search
@@ -120,8 +120,6 @@ nnoremap <silent> <leader>ag :Ag <C-R><C-W><CR>
 
 nnoremap n nzzzv                                         " (override) takes search occurrences to the middle of the screen
 nnoremap N Nzzzv
-
-nnoremap f /
 
 map q: :echo "you are not quitting, lol"<cr>
 
@@ -310,19 +308,14 @@ let g:ale_go_gofmt_options  = '-s'
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
 let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#use_cache     = 1
-
-
-" git gutter
-let g:gitgutter_sign_added            = '✚'
-let g:gitgutter_sign_modified         = '▸'
-let g:gitgutter_sign_removed          = '✄'
-let g:gitgutter_sign_modified_removed = '✂︎'
+call deoplete#custom#option('auto_complete', v:false)
 
 " rooter
 let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]

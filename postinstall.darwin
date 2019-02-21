@@ -5,6 +5,8 @@ set -eu
 echo 'Gonna need your password here :)'
 sudo -v
 
+sudo chown root:wheel /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
+  sudo chmod u+s /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
 # based on
 # https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 #
