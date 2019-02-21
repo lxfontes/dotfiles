@@ -1,4 +1,4 @@
-LINKS = ag ctags git gnupg input nvim psql ruby ssh tmux zsh
+LINKS = ag ctags git gnupg input nvim psql ruby ssh tmux zsh alacritty
 
 OS ?= $(shell uname -s | tr A-Z a-z)
 
