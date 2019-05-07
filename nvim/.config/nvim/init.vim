@@ -31,10 +31,6 @@ Plug 'ervandew/supertab'
 Plug 'airblade/vim-rooter'
 Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
-Plug 'zchee/deoplete-go', { 'do': 'make' }
-
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-hclfmt'
@@ -100,7 +96,7 @@ set hlsearch                                             " highlight search as t
 set signcolumn=yes                                       " always display sign column used by gitgutter
 set nojoinspaces                                         " do not add spaces when joining lines ending in punctuation
 
-
+set t_Co=256
 set bg=dark
 colorscheme janah
 
@@ -308,14 +304,6 @@ let g:ale_go_gofmt_options  = '-s'
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let b:deoplete_ignore_sources = ['around', 'member', 'buffer']
-let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache     = 1
-call deoplete#custom#option('auto_complete', v:false)
 
 " rooter
 let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
