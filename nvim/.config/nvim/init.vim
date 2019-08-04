@@ -281,12 +281,14 @@ augroup go
 augroup END
 
 " airline
-let g:airline_theme = 'lucius'
-let g:airline_powerline_fonts = 1
+let g:airline_theme = 'raven'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_extensions = ['branch', 'tabline', 'ale']
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#ale#error_symbol = '💥'
 let g:airline#extensions#ale#warning_symbol = '👀'  
+let g:airline#extensions#tabline#formatter = 'default'
 
 " w0rp/ale
 let g:ale_lint_on_text_changed = 0
