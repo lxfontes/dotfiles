@@ -12,7 +12,7 @@ if !filereadable(vimplug_exists)
 	autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -29,7 +29,6 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'ervandew/supertab'
 Plug 'airblade/vim-rooter'
-Plug 'christoomey/vim-tmux-navigator'
 
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
@@ -66,7 +65,7 @@ set numberwidth=3                                        " always spare 3 chars 
 set autoindent                                           " self explanatory
 set cursorline                                           " show current line
 set title                                                " modify terminal title
-set textwidth=140                                        " big screen
+set textwidth=0                                          " big screen
 set colorcolumn=121                                      " 120 is the new 80
 set wildmenu                                             " enable wildmenu
 set wildignorecase                                       " ignore case in wildmenu
@@ -95,26 +94,33 @@ set complete-=i                                          " do not scan included 
 set hlsearch                                             " highlight search as typing
 set signcolumn=yes                                       " always display sign column used by gitgutter
 set nojoinspaces                                         " do not add spaces when joining lines ending in punctuation
+set mat=2																								 " How many tenths of a second to blink when matching brackets
+set inccommand=nosplit                                   " shows you realtime what an :s command will do
 
-set t_Co=256
 set bg=dark
-colorscheme janah
+colorscheme nordisk
 
-nnoremap gsv :so $MYVIMRC<CR>                            " reload vimrc
-noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m    " Remove the Windows ^M - when the encodings gets messed up
-vmap // :TComment<CR>                                    " comments
-nmap <leader>w <C-w><C-w>_                               " Make it way easier to switch windows (<leader>w)
-noremap <leader>s :%s/\s\+$//g<CR>                       " remove extra white space from line ends
-nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR> " clear the highlighting of :set hlsearch.
+" reload vimrc
+nnoremap gsv :so $MYVIMRC<CR>                          
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
+" comments
+vmap // :TComment<CR>
+" remove extra white space from line ends
+noremap <leader>s :%s/\s\+$//g<CR>
+" clear the highlighting of :set hlsearch.
+nnoremap <silent> <leader>z :set hlsearch! hlsearch?<CR> 
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <C-o> :Commands<CR>
 nnoremap <leader><space> :Buffers<CR>
-nmap <leader>a :Ag<space>                                " search
-nmap <leader>v :vsplit<CR> <C-w><C-w>                    " split vertically with <leader> v
-nmap <leader>s :split<CR> <C-w><C-w>                     " split horizontally with <leader> s
+" split vertically with <leader> v
+nmap <leader>v :vsplit<CR> <c-w><c-w>
+" split horizontally with <leader> s
+nmap <leader>s :split<CR> <c-w><c-w>
 nnoremap <silent> <leader>ag :Ag <C-R><C-W><CR>
 
-nnoremap n nzzzv                                         " (override) takes search occurrences to the middle of the screen
+" (override) takes search occurrences to the middle of the screen
+nnoremap n nzzzv                    
 nnoremap N Nzzzv
 
 map q: :echo "you are not quitting, lol"<cr>
@@ -137,7 +143,6 @@ augroup behaviour
 
 	" markdown
 	au BufRead,BufNewFile *.md set filetype=markdown
-	au BufRead,BufNewFile *.md setlocal textwidth=120
 	au FileType markdown setlocal spell
 
 	autocmd FileType gitcommit setlocal spell
@@ -237,6 +242,8 @@ endfunction
 
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 let g:go_fmt_fail_silently = 1
 
 let g:go_highlight_types = 1
@@ -254,15 +261,6 @@ let g:go_highlight_extra_types = 1
 
 augroup go
 	au!
-	au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-	au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-	au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-	au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
-
 	au FileType go nmap <leader>r  <Plug>(go-run)
 	au FileType go nmap <leader>t  <Plug>(go-test)
 	au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
@@ -270,8 +268,6 @@ augroup go
 	au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
 	au FileType go nmap <C-g> :GoDecls<cr>
 	au FileType go nmap <leader>dr :GoDeclsDir<cr>
-	au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-	au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
 	au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
 
   " create a go doc comment based on the word under the cursor
@@ -285,11 +281,12 @@ augroup go
 augroup END
 
 " airline
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'lucius'
+let g:airline_powerline_fonts = 1
 let g:airline_extensions = ['branch', 'tabline', 'ale']
 let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#ale#error_symbol = '✖ '
-let g:airline#extensions#ale#warning_symbol = '⚠ '
+let g:airline#extensions#ale#error_symbol = '💥'
+let g:airline#extensions#ale#warning_symbol = '👀'  
 
 " w0rp/ale
 let g:ale_lint_on_text_changed = 0
@@ -301,9 +298,14 @@ let g:ale_linters = {'go': ['gometalinter', 'gofmt' ]}
 let g:ale_go_gometalinter_options = '--fast'
 let g:ale_go_gobuild_options  = '-tags "integration"'
 let g:ale_go_gofmt_options  = '-s'
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = '💥'
+let g:ale_sign_warning = '👀'
 
+" signify
+let g:signify_sign_add                 = '✚'
+let g:signify_sign_change              = '✶'
+let g:signify_sign_delete              = '✖'
+let g:signify_sign_delete_first_line   = '✕'
 
 " rooter
 let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
@@ -316,12 +318,3 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
-
-" tmux navigator
-" also goes on tmux side & iterm
-let g:tmux_navigator_no_mappings = 0
-nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
-nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
-nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
