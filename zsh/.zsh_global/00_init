@@ -20,6 +20,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 alias k=kubectl
+alias g=git
 
 ## Z
 eval "$(jump shell --bind=z)"

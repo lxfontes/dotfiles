@@ -1,7 +1,7 @@
 cask_args appdir: '/Applications'
 
 tap "aybabtme/tap"
-brew "aybabtme/tap/dorepl"
+tap "heroku/brew"
 
 brew 'ack'
 brew 'jump'
@@ -10,8 +10,6 @@ brew 'ripgrep'
 brew "vault", args: ["with-dynamic"]
 brew 'apktool'
 brew 'binutils'
-brew "dnsmasq", restart_service: true
-brew "doctl"
 brew "dos2unix"
 brew "kafkacat"
 brew 'coreutils'
@@ -54,7 +52,6 @@ brew 'tree'
 brew 'neovim'
 brew "pinentry-mac"
 brew "protobuf"
-brew "redis", restart_service: true
 brew 'kubernetes-cli'
 brew 'dep'
 brew 'git-lfs'
@@ -63,7 +60,6 @@ brew 'watch'
 brew 'docker-machine-driver-hyperkit'
 
 cask 'google-chrome'
-cask 'minikube'
 cask 'slack'
 cask 'vlc'
 cask 'iterm2'
@@ -72,13 +68,5 @@ cask 'shiftit'
 cask 'visual-studio-code'
 cask 'docker'
 cask 'spotify'
-cask 'dropbox'
-cask 'whatsapp'
 cask "google-cloud-sdk"
-cask "sequel-pro"
-cask 'telegram'
-cask 'trailer'
-cask "transmission"
-cask "unetbootin"
 
-mas "1Password", id: 443987910
