@@ -6,6 +6,11 @@ _darwin_stuff() {
   alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 }
 
+iterm_badge() {
+ printf "\e]1337;SetBadgeFormat=%s\a" \
+  $(echo -n "$@" | base64)
+}
+
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
 
 alias bi='bundle install --path=.bundle/gems'
