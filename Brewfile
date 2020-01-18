@@ -1,18 +1,15 @@
 cask_args appdir: '/Applications'
 
-tap "aybabtme/tap"
-tap "heroku/brew"
+tap 'heroku/brew'
 
 brew 'ack'
 brew 'jump'
 brew 'gpg'
-brew 'ripgrep'
-brew "vault", args: ["with-dynamic"]
-brew 'apktool'
+brew 'vault'
 brew 'binutils'
-brew "dos2unix"
-brew "kafkacat"
+brew 'dos2unix'
 brew 'coreutils'
+brew 'redis'
 brew 'ctags'
 brew 'curl'
 brew 'stow'
@@ -44,29 +41,26 @@ brew 'tmux'
 brew 'unrar'
 brew 'wget'
 brew 'xz'
-brew 'zsh'
 brew 'reattach-to-user-namespace'
 brew 'direnv'
 brew 'git-crypt'
 brew 'tree'
 brew 'neovim'
-brew "pinentry-mac"
-brew "protobuf"
+brew 'pinentry-mac'
+brew 'protobuf'
 brew 'kubernetes-cli'
 brew 'dep'
 brew 'git-lfs'
 brew 'shellcheck'
 brew 'watch'
-brew 'docker-machine-driver-hyperkit'
 
-cask 'google-chrome'
+cask 'firefox'
 cask 'slack'
 cask 'vlc'
 cask 'iterm2'
-cask 'alacritty'
 cask 'shiftit'
 cask 'visual-studio-code'
 cask 'docker'
 cask 'spotify'
-cask "google-cloud-sdk"
-
+cask 'google-cloud-sdk'
+cask 'gqrx'

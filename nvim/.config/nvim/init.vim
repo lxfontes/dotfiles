@@ -1,8 +1,3 @@
-set nocompatible " vim, not vi
-filetype off
-filetype plugin indent on
-syntax on
-
 " plugins
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 if !filereadable(vimplug_exists)
@@ -53,6 +48,7 @@ Plug 'vim-scripts/closetag.vim'
 call plug#end()
 
 " general
+syntax on
 
 let mapleader=' '                                        " command leader
 set nobackup                                             " don't store backup files

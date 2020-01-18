@@ -10,6 +10,4 @@ curl -s -fLo "$HOME/.config/nvim/autoload/plug.vim" --create-dirs \
 # the current process has no idea of gopath / new env vars
 zsh -i -l -c "vim +PlugInstall +qall +UpdateRemotePlugins +GoInstallBinaries"
 
-zsh -l -c "go get github.com/gsamokovarov/jump"
-
 echo "done"
