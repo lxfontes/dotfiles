@@ -53,6 +53,7 @@ brew 'dep'
 brew 'git-lfs'
 brew 'shellcheck'
 brew 'watch'
+brew 'tmux-mem-cpu-load'
 
 cask 'firefox'
 cask 'slack'

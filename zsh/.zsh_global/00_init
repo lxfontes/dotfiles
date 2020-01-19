@@ -1,19 +1,13 @@
-_linux_stuff() {
-  export PATH=$PATH:/usr/local/go/bin
-}
-
-_darwin_stuff() {
-  # Homebrew will not send analytics
-  export HOMEBREW_NO_ANALYTICS=1
-  # Homebrew will not auto-update before running `brew install`, `brew upgrade` or `brew tap`.
-  export HOMEBREW_NO_AUTO_UPDATE=1
-  alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
-}
-
 iterm_badge() {
  printf "\e]1337;SetBadgeFormat=%s\a" \
   $(echo -n "$@" | base64)
 }
+
+# Homebrew will not send analytics
+export HOMEBREW_NO_ANALYTICS=1
+# Homebrew will not auto-update before running `brew install`, `brew upgrade` or `brew tap`.
+export HOMEBREW_NO_AUTO_UPDATE=1
+alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
 
@@ -31,9 +25,6 @@ export VISUAL=nvim
 alias k=kubectl
 alias g=git
 
-## Z
-eval "$(jump shell --bind=z)"
-
 ## direnv.net
 eval "$(direnv hook zsh)"
 
@@ -46,15 +37,3 @@ alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
 
 bindkey "^r" history-incremental-pattern-search-backward
 KEYTIMEOUT=1
-
-case `uname -s` in
-  Darwin)
-    _darwin_stuff
-    ;;
-  Linux)
-    _linux_stuff
-    ;;
-  **)
-    echo "WARNING: could not determine underlying OS"
-    ;;
-esac
