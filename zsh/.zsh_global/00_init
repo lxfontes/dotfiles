@@ -3,6 +3,10 @@ _linux_stuff() {
 }
 
 _darwin_stuff() {
+  # Homebrew will not send analytics
+  export HOMEBREW_NO_ANALYTICS=1
+  # Homebrew will not auto-update before running `brew install`, `brew upgrade` or `brew tap`.
+  export HOMEBREW_NO_AUTO_UPDATE=1
   alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 }
 
