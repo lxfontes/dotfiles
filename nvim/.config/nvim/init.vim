@@ -84,6 +84,8 @@ set inccommand=nosplit                                   " shows you realtime wh
 set listchars=tab:»·,nbsp:+,trail:·,extends:→,precedes:← " catch special characters
 set completeopt=menu,menuone,noinsert                    " always display completion, never pick a default
 set wildmode=longest:list,full                           " complete longest string then menu
+set showmatch                                            " show matching parenthesis
+set matchtime=0                                          " parenthesis matching shouldn't move the cursor
 
 
 set tabstop=2
