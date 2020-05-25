@@ -11,7 +11,7 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
 
-alias bi='bundle install --path=.bundle/gems'
+alias bi='bundle install'
 alias be='bundle exec'
 
 export GOPATH=$HOME/code
