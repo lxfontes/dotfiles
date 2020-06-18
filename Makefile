@@ -5,7 +5,7 @@ OS ?= $(shell uname -s | tr A-Z a-z)
 all: preinstall link postinstall
 
 dry-run:
-	stow --no-folding -n -v -t $(HOME) $(LINKS)
+	stow --no-folding --adopt -n -v -t $(HOME) $(LINKS)
 
 link:
 	stow --no-folding --adopt -v -t $(HOME) $(LINKS)

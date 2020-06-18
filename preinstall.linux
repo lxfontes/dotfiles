@@ -2,14 +2,10 @@
 
 set -eu
 
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 sudo apt-get update
 
 sudo apt-get install -y \
+  docker.io \
   ctags \
   stow \
   zsh \
@@ -29,36 +25,29 @@ sudo apt-get install -y \
   ruby-build \
   libssl-dev \
   python-dev \
-  python-pip \
+  python3-pip \
   python3-dev \
   python3-setuptools \
   python3-pip \
+  python3-neovim \
   git-crypt \
   autotools-dev \
   automake \
   libevent-dev \
-  docker-ce \
   conky \
   libncurses-dev \
   mysql-client
 
-
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-
-pip3 install --user --upgrade neovim
+mkdir -p $HOME/bin
+curl -sLo $HOME/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x $HOME/bin/kubectl
 
 sudo usermod -a -G docker "$(whoami)"
 
-sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --config vi
-sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --config vim
-sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config editor
-
-if [ ! -d /usr/local/go ]; then
-  echo "*WARNING: deleting previous go install"
-  rm -rf /usr/local/go
+if [ -d /usr/local/go ]; then
+  echo "*WARNING: found previous go install. Stop now if you don't want it removed!!."
+  read
+  sudo rm -rf /usr/local/go
 fi
 
-curl -sLO https://storage.googleapis.com/golang/go1.10.1.linux-amd64.tar.gz | sudo tar -C /usr/local -xvf -
+curl -sL https://storage.googleapis.com/golang/go1.10.1.linux-amd64.tar.gz | sudo tar -C /usr/local -zxvf -
