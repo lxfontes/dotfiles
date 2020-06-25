@@ -32,13 +32,13 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
 " cosmetic
 Plug 'flazz/vim-colorschemes'
-Plug 'kaicataldo/material.vim'
+Plug 'haishanh/night-owl.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-colorscheme nord
+colorscheme night-owl
 
 let mapleader=' '
 filetype plugin indent on
