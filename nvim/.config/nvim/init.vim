@@ -13,11 +13,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'ervandew/supertab'
 Plug 'airblade/vim-rooter'
-Plug 'mhinz/vim-signify'
 Plug 'tomtom/tcomment_vim'
 Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' " fzf from brew
-Plug 'junegunn/fzf.vim'
+Plug 'neovim/nvim-lsp'
+Plug 'mhinz/vim-signify'
 
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
@@ -31,14 +31,12 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
 " cosmetic
-Plug 'flazz/vim-colorschemes'
-Plug 'haishanh/night-owl.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-colorscheme night-owl
 
 let mapleader=' '
 filetype plugin indent on
@@ -87,6 +85,8 @@ set wildmode=longest:list,full                           " complete longest stri
 set showmatch                                            " show matching parenthesis
 set matchtime=0                                          " parenthesis matching shouldn't move the cursor
 
+
+colorscheme onedark
 
 set tabstop=2
 set shiftwidth=2
@@ -166,7 +166,7 @@ augroup go
 augroup END
 
 "vim-airline/vim-airline
-let g:airline_theme = 'kolor'
+let g:airline_theme = 'biogoo'
 let g:airline_extensions = ['branch', 'tabline', 'ale']
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -236,3 +236,8 @@ nnoremap gsv :so $MYVIMRC<CR>
 
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <leader><space> :Buffers<CR>
+nnoremap <silent>`     <cmd>lua vim.lsp.buf.hover()<CR>
+
+lua <<END
+require'nvim_lsp'.gopls.setup{}
+END

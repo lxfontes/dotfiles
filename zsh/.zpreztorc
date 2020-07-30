@@ -2,7 +2,6 @@ zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
   'history' \
   'completion' \
-  'fasd' \
   'syntax-highlighting' \
   'environment' \
   'terminal' \
@@ -17,4 +16,4 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 
 zstyle ':prezto:module:prompt' theme 'kylewest'
 
-zstyle ':prezto:module:tmux:auto-start' local 'no'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'

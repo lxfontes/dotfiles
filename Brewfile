@@ -45,7 +45,7 @@ brew 'reattach-to-user-namespace'
 brew 'direnv'
 brew 'git-crypt'
 brew 'tree'
-brew 'neovim'
+brew 'neovim', args: ['head']
 brew 'pinentry-mac'
 brew 'protobuf'
 brew 'kubernetes-cli'
