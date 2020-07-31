@@ -1,3 +1,17 @@
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+## direnv.net
+eval "$(direnv hook zsh)"
+
+## jump
+eval "$(jump shell zsh)"
+
+## rubby
+eval "$(rbenv init - --no-rehash)"
+
+
 iterm_badge() {
  printf "\e]1337;SetBadgeFormat=%s\a" \
   $(echo -n "$@" | base64)
@@ -25,25 +39,12 @@ export VISUAL=nvim
 alias k=kubectl
 alias g=git
 
-## direnv.net
-eval "$(direnv hook zsh)"
-
-## jump
-eval "$(jump shell zsh)"
-
-## rubby
-eval "$(rbenv init - --no-rehash)"
-
 alias hazip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
 
-bindkey "^r" history-incremental-pattern-search-backward
-KEYTIMEOUT=1
-
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+bindkey "^r" history-incremental-search-backward
+export KEYTIMEOUT=1
 
 if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
   source ${ZDOTDIR:-$HOME}/.zshrc.local

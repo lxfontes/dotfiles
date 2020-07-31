@@ -1,9 +1,10 @@
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
-  'history' \
+  'environment' \
   'completion' \
   'syntax-highlighting' \
-  'environment' \
+  'history' \
+  'history-substring-search' \
   'terminal' \
   'editor' \
   'directory' \
@@ -17,3 +18,5 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:prompt' theme 'kylewest'
 
 zstyle ':prezto:module:tmux:auto-start' local 'yes'
+
+zstyle ':prezto:module:history-substring-search' color 'yes'
