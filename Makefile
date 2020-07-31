@@ -1,7 +1,5 @@
 LINKS = ag ctags git gnupg input nvim psql ruby ssh tmux zsh alacritty
 
-OS ?= $(shell uname -s | tr A-Z a-z)
-
 all: preinstall link postinstall
 
 dry-run:
@@ -12,10 +10,8 @@ link:
 
 preinstall:
 	./preinstall
-	[ -f ./preinstall.$(OS) ] && ./preinstall.$(OS)
 
 postinstall:
 	./postinstall
-	[ -f ./postinstall.$(OS) ] && ./postinstall.$(OS)
 
 .PHONY: dry-run link preinstall postinstall

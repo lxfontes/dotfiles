@@ -10,3 +10,10 @@ fi
 mkdir -p "$HOME/code/src"
 mkdir -p "$HOME/code/pkg"
 mkdir -p "$HOME/code/bin"
+
+# Install Homebrew
+if ! command -v brew; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+brew bundle
