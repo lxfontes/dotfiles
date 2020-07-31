@@ -1,4 +1,4 @@
-LINKS = ag ctags git gnupg input nvim psql ruby ssh tmux zsh alacritty
+LINKS = ag ctags git gnupg nvim psql ruby ssh tmux zsh alacritty
 
 all: preinstall link postinstall
 
