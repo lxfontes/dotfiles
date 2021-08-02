@@ -1,7 +1,7 @@
 [user]
   name = lxfontes
-  email = lxfontes@gmail.com
-  signingkey = C594A0BA
+  email = 35205+lxfontes@users.noreply.github.com
+  signingkey = 67EDF3ACDAA00F17
 
 [gitflow "prefix"]
   feature = feature/
@@ -31,6 +31,7 @@
   br = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
   squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
   pushf = push --force-with-lease
+	exec = "!exec "
 
 [format]
     pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
@@ -64,7 +65,7 @@
 [core]
 	excludesfile = /Users/lfontes/.gitignore
 [commit]
-#	gpgsign = true
+	gpgsign = true
 [gpg]
 	program = gpg
 [filter "lfs"]
@@ -83,3 +84,7 @@
 	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 [init]
 	templateDir = /Users/lfontes/.git-templates/git-secrets
+[pull]
+	rebase = true
+[fetch]
+	prune = true

@@ -9,6 +9,7 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 " tooling
+Plug 'scrooloose/vim-slumlord'
 Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'ervandew/supertab'
@@ -16,12 +17,13 @@ Plug 'airblade/vim-rooter'
 Plug 'tomtom/tcomment_vim'
 Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' " fzf from brew
-Plug 'neovim/nvim-lsp'
+Plug 'junegunn/fzf.vim'
+" Plug 'neovim/nvim-lsp'
 Plug 'mhinz/vim-signify'
 
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
-Plug 'fatih/vim-hclfmt'
+Plug 'jvirtanen/vim-hcl'
 
 " go
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -34,6 +36,9 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" diagrams
+Plug 'aklt/plantuml-syntax'
 
 call plug#end()
 
@@ -139,6 +144,7 @@ augroup END
 
 " go
 let g:go_fmt_command = "goimports"
+let g:go_build_tags = "-tags=integration"
 let g:go_fmt_fail_silently = 1
 let g:go_updatetime = 0 " use updatetime
 let g:go_highlight_types = 1
@@ -183,10 +189,15 @@ let g:airline_left_sep = ""
 let g:airline_right_sep = ""
 
 " ale
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_echo_msg_format = '%linter% | %s (%code%)'
 let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_save = 1
-let g:ale_linters = {'go': ['gometalinter', 'gofmt' ]}
+let g:ale_linters = {
+          \ 'go': ['gometalinter', 'gofmt'],
+          \ 'text': ['proselint'],
+          \ 'markdown': ['proselint'],
+          \ }
 let g:ale_go_gometalinter_options = '--fast'
 let g:ale_go_gobuild_options  = '-tags "integration"'
 let g:ale_go_gofmt_options  = '-s'
@@ -224,8 +235,9 @@ nmap <leader>w <C-w><C-w>_
 "remove extra white space from line end
 noremap <leader>s :%s/\s\+$//g<CR>
 
-" search
-nmap <leader>a :Ag<space>
+" search word under cursor
+nnoremap <silent> <Leader>A :Ag<CR>
+nnoremap <silent> <Leader>a :Ag <C-R><C-W><CR>
 
 " (override) takes search occurrences to the middle of the screen
 nnoremap n nzzzv                    
@@ -236,8 +248,8 @@ nnoremap gsv :so $MYVIMRC<CR>
 
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <leader><space> :Buffers<CR>
-nnoremap <silent>`     <cmd>lua vim.lsp.buf.hover()<CR>
-
-lua <<END
-require'nvim_lsp'.gopls.setup{}
-END
+" nnoremap <silent>`     <cmd>lua vim.lsp.buf.hover()<CR>
+"
+" lua <<END
+" require'nvim_lsp'.gopls.setup{}
+" END

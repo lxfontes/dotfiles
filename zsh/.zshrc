@@ -11,10 +11,15 @@ eval "$(jump shell zsh)"
 ## rubby
 eval "$(rbenv init - --no-rehash)"
 
+source <(kubectl completion zsh)
 
 iterm_badge() {
  printf "\e]1337;SetBadgeFormat=%s\a" \
   $(echo -n "$@" | base64)
+}
+
+tmux_set_title() {
+  printf '\033]2;%s\033\\' "$1"
 }
 
 # Homebrew will not send analytics
@@ -37,6 +42,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 alias k=kubectl
+
 alias g=git
 
 alias hazip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -49,3 +55,6 @@ export KEYTIMEOUT=1
 if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
   source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
+
+
+tmux_set_title base
