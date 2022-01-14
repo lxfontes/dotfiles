@@ -3,17 +3,11 @@
   email = 35205+lxfontes@users.noreply.github.com
   signingkey = 67EDF3ACDAA00F17
 
-[gitflow "prefix"]
-  feature = feature/
-  release = qa/
-  hotfix = hotfix/
-  support = support/
-  versiontag = v
-
 [color]
   ui = auto
 
 [alias]
+  root = rev-parse --show-toplevel
   hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
@@ -53,6 +47,9 @@
   keepTemporaries = false
   trustExitCode = false
   keepBackup = false
+
+[credential]
+  helper = osxkeychain
 
 [apply]
     whitespace = nowarn
