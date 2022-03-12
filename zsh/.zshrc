@@ -2,11 +2,13 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
+
 ## direnv.net
 eval "$(direnv hook zsh)"
 
 ## jump
-eval "$(jump shell zsh)"
+eval "$(zoxide init --cmd j zsh)"
 
 ## rubby
 eval "$(rbenv init - --no-rehash)"
@@ -28,7 +30,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed"
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
 
 alias bi='bundle install'
 alias be='bundle exec'
@@ -45,6 +46,12 @@ alias k=kubectl
 
 alias g=git
 
+alias h=heroku
+
+alias tf=terraform
+
+alias z=j
+
 alias hazip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
@@ -55,6 +62,5 @@ export KEYTIMEOUT=1
 if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
   source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
-
 
 tmux_set_title base
