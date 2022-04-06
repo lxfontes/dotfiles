@@ -62,7 +62,7 @@
 [core]
 	excludesfile = /Users/lfontes/.gitignore
 [commit]
-	template = /Users/lxf/.config/git/GIT_COMMIT_TEMPLATE
+	template = ~/.config/git/GIT_COMMIT_TEMPLATE
 #	gpgsign = true
 [gpg]
 	program = gpg
