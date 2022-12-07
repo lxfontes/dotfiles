@@ -16,12 +16,6 @@ Plug 'ervandew/supertab'
 Plug 'airblade/vim-rooter'
 Plug 'tomtom/tcomment_vim'
 Plug 'w0rp/ale'
-Plug '/opt/homebrew/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'mhinz/vim-signify'
-
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " terraform / hcl
 Plug 'hashivim/vim-terraform'
@@ -41,6 +35,14 @@ Plug 'vim-airline/vim-airline-themes'
 
 " diagrams
 Plug 'aklt/plantuml-syntax'
+
+" 2022
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+
+Plug 'lewis6991/gitsigns.nvim'
+
+Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
@@ -204,12 +206,6 @@ let g:ale_go_gometalinter_options = '--fast'
 let g:ale_go_gobuild_options  = '-tags "integration"'
 let g:ale_go_gofmt_options  = '-s'
 
-" signify
-let g:signify_sign_add                 = '✚'
-let g:signify_sign_change              = ''
-let g:signify_sign_delete              = '✖'
-let g:signify_sign_delete_first_line   = '✕'
-
 " rooter
 let g:rooter_patterns = ['cmd/', 'Rakefile', 'Dockerfile', 'docker-compose.yml', 'vendor/', '.git/' ]
 let g:rooter_silent_chdir = 1
@@ -248,10 +244,8 @@ nnoremap N Nzzzv
 " reload vimrc
 nnoremap gsv :so $MYVIMRC<CR>
 
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <leader><space> :Buffers<CR>
-nnoremap <silent>`     <cmd>lua vim.lsp.buf.hover()<CR>
-
+nnoremap <silent> <C-p> <cmd>Telescope find_files<cr>
+nnoremap <leader><space> <cmd>Telescope live_grep<CR>
 
 lua <<END
 local nvim_lsp = require('lspconfig')
@@ -265,7 +259,6 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
   local opts = { noremap=true, silent=true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -286,7 +279,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 local servers = { 'pyright', 'gopls', 'solargraph', 'tsserver' }
@@ -298,4 +290,6 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+require('gitsigns').setup()
 END
