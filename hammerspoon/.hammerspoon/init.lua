@@ -1,24 +1,16 @@
-mods = { 'ctrl', 'alt', 'cmd' }
+hs.loadSpoon("SpoonInstall")
 
-units = {
-  bottom = { x = 0.0, y = 0.5, w = 1.0, h = 0.5 },
-  left   = { x = 0.0, y = 0.0, w = 0.5, h = 1.0 },
-  right  = { x = 0.5, y = 0.0, w = 0.5, h = 1.0 },
-  top    = { x = 0.0, y = 0.0, w = 1.0, h = 0.5 },
-}
+mods = { "ctrl", "alt", "cmd" }
 
-animationDuration = 0.1
-
-function createMoveWindow(rect)
-  return function ()
-    hs.window.focusedWindow():move(rect, nil, true, animationDuration)
-  end
-end
-
-hs.hotkey.bind(mods, 'down', createMoveWindow(units.bottom))
-hs.hotkey.bind(mods, 'left', createMoveWindow(units.left))
-hs.hotkey.bind(mods, 'right', createMoveWindow(units.right))
-hs.hotkey.bind(mods, 'up', createMoveWindow(units.top))
-hs.hotkey.bind(mods, 'm', function()
-  hs.window.focusedWindow():maximize(animationDuration)
-end)
+spoon.SpoonInstall:andUse("WindowHalfsAndThirds", {
+	config = { use_frame_correctness = true },
+	hotkeys = {
+		left_half = { mods, "Left" },
+		right_half = { mods, "Right" },
+		top_half = { mods, "Up" },
+		bottom_half = { mods, "Down" },
+		undo = { mods, "z" },
+		center = { mods, "c" },
+		max_toggle = { mods, "m" },
+	},
+})

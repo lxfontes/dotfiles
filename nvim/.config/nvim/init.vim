@@ -38,6 +38,10 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'B4mbus/oxocarbon-lua.nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 
 " diagrams
 Plug 'aklt/plantuml-syntax'
@@ -93,7 +97,20 @@ set showmatch                                            " show matching parenth
 set matchtime=0                                          " parenthesis matching shouldn't move the cursor
 
 
-colorscheme onedark
+set guifont=Input\ Nerd\ Font:h16
+
+lua << EOF
+require("catppuccin").setup {
+    flavour = "mocha" -- mocha, macchiato, frappe, latte
+}
+EOF
+colorscheme catppuccin
+
+if exists("g:neovide")
+"      let g:neovide_fullscreen=v:true
+      let g:neovide_remember_window_size = v:true
+      let g:neovide_hide_mouse_when_typing = v:true
+endif
 
 set tabstop=2
 set shiftwidth=2
@@ -174,7 +191,7 @@ augroup go
 augroup END
 
 "vim-airline/vim-airline
-let g:airline_theme = 'violet'
+let g:airline_theme = 'behelit'
 let g:airline_extensions = ['branch', 'tabline', 'ale']
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -289,7 +306,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'pyright', 'gopls', 'solargraph', 'tsserver' }
+local servers = { 'pyright', 'gopls', 'solargraph'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
