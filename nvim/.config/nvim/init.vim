@@ -1,32 +1,6 @@
-" plugins
-let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
-if !filereadable(vimplug_exists)
-	echo "Installing Vim-Plug..."
-	echo ""
-	silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall
-endif
-
-call plug#begin('~/.config/nvim/plugged')
-" tooling
-Plug 'scrooloose/vim-slumlord'
-Plug 'tpope/vim-fugitive'
-Plug 'godlygeek/tabular'
 Plug 'ervandew/supertab'
-Plug 'airblade/vim-rooter'
-Plug 'tomtom/tcomment_vim'
 Plug 'w0rp/ale'
 
-" terraform / hcl
-Plug 'hashivim/vim-terraform'
-Plug 'jvirtanen/vim-hcl'
-
-" go
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-
-" ruby
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
 " cosmetic
 Plug 'joshdick/onedark.vim'
@@ -245,8 +219,6 @@ nmap <leader>s :split<CR> <C-w><C-w>
 nmap ]e <Plug>(ale_next)
 nmap [e <Plug>(ale_previous)
 
-" comments
-vmap // :TComment<CR>
 
 " Make it way easier to switch windows (<leader>w)
 nmap <leader>w <C-w><C-w>_
