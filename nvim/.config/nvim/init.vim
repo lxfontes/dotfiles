@@ -217,6 +217,10 @@ let g:ale_linters = {
           \ 'text': ['proselint'],
           \ 'markdown': ['proselint'],
           \ }
+let g:ale_fixers = {
+          \ 'javascript': ['prettier'],
+          \ 'css': ['prettier'],
+          \ }
 let g:ale_go_gometalinter_options = '--fast'
 let g:ale_go_gobuild_options  = '-tags "integration"'
 let g:ale_go_gofmt_options  = '-s'
@@ -306,7 +310,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'pyright', 'gopls', 'solargraph'}
+local servers = { 'pyright', 'gopls', 'solargraph', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,

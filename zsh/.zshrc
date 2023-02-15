@@ -2,7 +2,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+# homebrew paths
+export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gnu-getopt/bin:/opt/homebrew/opt/python@3/bin:$PATH
 
 ## direnv.net
 eval "$(direnv hook zsh)"
@@ -13,6 +15,8 @@ eval "$(zoxide init --cmd j zsh)"
 ## rubby
 eval "$(rbenv init - --no-rehash)"
 
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source <(kubectl completion zsh)
 
 iterm_badge() {
@@ -59,12 +63,18 @@ alias dev_layout='tmux split-window -h -p 40 && tmux split-window -v'
 bindkey "^r" history-incremental-search-backward
 export KEYTIMEOUT=1
 
-if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
-  source ${ZDOTDIR:-$HOME}/.zshrc.local
-fi
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export PATH="$(yarn global bin):$PATH"
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# always last
+if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
+  source ${ZDOTDIR:-$HOME}/.zshrc.local
+fi
 tmux_set_title base
