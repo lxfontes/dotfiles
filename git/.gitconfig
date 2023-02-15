@@ -30,23 +30,8 @@
 [format]
     pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
-[diff]
-  tool = code
-
-[difftool "code"]
-  cmd = code --wait --diff $LOCAL $REMOTE
-
 [merge]
-  tool = p4merge
-  summary = true
-  log = true
-  prompt = false
-
-[mergetool "p4merge"]
-  cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge "\"$PWD/$BASE\"" "\"$PWD/$REMOTE\"" "\"$PWD/$LOCAL\"" "\"$PWD/$MERGED\""
-  keepTemporaries = false
-  trustExitCode = false
-  keepBackup = false
+  conflictstyle = diff3
 
 [credential]
   helper = osxkeychain
@@ -61,8 +46,13 @@
     enabled = true
 [core]
 	excludesfile = /Users/lfontes/.gitignore
+    pager = diffr | less -R
+[interactive]
+    diffFilter = diffr
+[diff]
+    colorMoved = default
 [commit]
-	template = /Users/lxf/.config/git/GIT_COMMIT_TEMPLATE
+	template = ~/.config/git/GIT_COMMIT_TEMPLATE
 #	gpgsign = true
 [gpg]
 	program = gpg
