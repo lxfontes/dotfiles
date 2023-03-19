@@ -1,5 +1,6 @@
 /go/pkg
 /vendor
+/node_modules
 *.css
 *.pdf
 *.git

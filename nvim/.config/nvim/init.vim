@@ -32,7 +32,7 @@ Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 " ruby
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
+" Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
 " cosmetic
 Plug 'joshdick/onedark.vim'
@@ -160,6 +160,8 @@ augroup tabs
 	nnoremap <s-tab> :bp <cr>
 	nnoremap <silent> <s-t> :new<cr>
 augroup END
+
+autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
 
 " go
 let g:go_fmt_command = "goimports"
