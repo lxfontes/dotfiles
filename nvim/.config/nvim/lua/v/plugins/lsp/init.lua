@@ -18,9 +18,9 @@ return {
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
     local on_attach = function(client, bufnr)
-        if client.server_capabilities.documentSymbolProvider then
-                require('nvim-navic').attach(client, bufnr)
-            end
+      if client.server_capabilities.documentSymbolProvider then
+        require('nvim-navic').attach(client, bufnr)
+      end
 
       if _wk then
         wk.register({

@@ -7,7 +7,7 @@ return {
     'SmiteshP/nvim-navic',
   },
   config = function()
-    local navic = require('nvim-navic')
+    local navic = require 'nvim-navic'
     require('lualine').setup {
       options = { globalstatus = true },
       sections = {
@@ -15,9 +15,8 @@ return {
         lualine_b = { 'diff' },
         lualine_c = { 'diagnostics' },
         lualine_x = {
-                    { navic.get_location, cond = navic.is_available }
-
-                },
+          { navic.get_location, cond = navic.is_available },
+        },
         lualine_y = {},
         lualine_z = {},
       },
@@ -29,8 +28,8 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-      tabline = {},
       extensions = {},
+      winbar = {},
     }
   end,
 }
