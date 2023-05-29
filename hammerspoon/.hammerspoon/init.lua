@@ -1,16 +1,21 @@
 hs.loadSpoon("SpoonInstall")
 
-mods = { "ctrl", "alt", "cmd" }
+third_mods = { "ctrl", "cmd" }
+half_mods = { "ctrl", "alt", "cmd" }
 
 spoon.SpoonInstall:andUse("WindowHalfsAndThirds", {
 	config = { use_frame_correctness = true },
 	hotkeys = {
-		left_half = { mods, "Left" },
-		right_half = { mods, "Right" },
-		top_half = { mods, "Up" },
-		bottom_half = { mods, "Down" },
-		undo = { mods, "z" },
-		center = { mods, "c" },
-		max_toggle = { mods, "m" },
+		third_left = { third_mods, "Left" },
+		third_right = { third_mods, "Right" },
+
+		center = { half_mods , "c" },
+		max_toggle = { half_mods, "m" },
+
+		left_half = { half_mods, "Left" },
+		right_half = { half_mods, "Right" },
+
+		top_half = { half_mods, "Up" },
+		bottom_half = { half_mods, "Down" },
 	},
 })

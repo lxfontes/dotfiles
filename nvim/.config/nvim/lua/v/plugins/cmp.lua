@@ -151,7 +151,7 @@ return {
 				{ name = "buffer", keyword_length = 3 },
 				{ name = "vsnip" },
 			},
-			preselect = cmp.PreselectMode.None,
+			preselect = cmp.PreselectMode.Item,
 		})
 	end,
 }

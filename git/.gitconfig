@@ -1,7 +1,6 @@
-[user]
-  name = lxfontes
-  email = 35205+lxfontes@users.noreply.github.com
-  signingkey = 67EDF3ACDAA00F17
+# set the user in the local config
+[include]
+    path = ~/.gitconfig.local
 
 [color]
   ui = auto
@@ -21,7 +20,7 @@
   changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
   l = log -n 10 --graph --date=short
   simple = log --pretty=format:\" * %s\"
-  br = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+  br = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
   squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
   pushf = push --force-with-lease
 	exec = "!exec "
