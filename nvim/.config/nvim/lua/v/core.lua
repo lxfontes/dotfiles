@@ -106,13 +106,13 @@ vim.opt.wildignore = {
 }
 
 vim.opt.diffopt = {
-  'closeoff', -- cancel diff if only one window is remaining
+  'closeoff',  -- cancel diff if only one window is remaining
   'context:6', -- context of 6 lines to changes
-  'filler', -- show filler lines to keep text synchronized
+  'filler',    -- show filler lines to keep text synchronized
   'hiddenoff', -- cancel diff for hidden buffers
   'indent-heuristic',
   'internal',
-  'iwhite', -- ignore trailing whitespaces
+  'iwhite',   -- ignore trailing whitespaces
   'vertical', -- use vertical split by default
 }
 
@@ -121,3 +121,55 @@ vim.filetype.add {
     ['[jt]sconfig.*.json'] = 'jsonc',
   },
 }
+
+-- autocmd
+
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('TextYankPost', {
+  pattern = '*',
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
+})
+
+autocmd('VimResized', {
+  pattern = '*',
+  command = 'wincmd =',
+  desc = 'Resize window when host window changes',
+})
+
+autocmd('BufRead', {
+  callback = function(opts)
+    autocmd('BufWinEnter', {
+      once = true,
+      buffer = opts.buf,
+      callback = function()
+        local ft = vim.bo[opts.buf].filetype
+        local last_known_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
+        if not (ft:match 'commit' and ft:match 'rebase') and last_known_line > 1 and last_known_line <= vim.api.nvim_buf_line_count(opts.buf) then
+          vim.api.nvim_feedkeys([[g`"]], 'x', false)
+        end
+      end,
+    })
+  end,
+})
+
+local read_group = vim.api.nvim_create_augroup('read_group', { clear = false })
+-- enable cursor on active windows
+local cursor_opts = {
+  callback = function()
+    vim.opt_local.cursorline = true
+  end,
+  group = read_group,
+}
+autocmd('VimEnter', cursor_opts)
+autocmd('WinEnter', cursor_opts)
+autocmd('BufWinEnter', cursor_opts)
+autocmd('WinLeave', {
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+  group = read_group,
+})
