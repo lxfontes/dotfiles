@@ -1,5 +1,9 @@
 # yet another dotfiles repo
 
+```
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+```
+
 ### Secure storage
 
 Besides encrypting the entire disk, I also use an encrypted loopback image for
