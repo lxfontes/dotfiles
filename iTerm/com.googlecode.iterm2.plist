@@ -2075,7 +2075,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<false/>
 			<key>Normal Font</key>
-			<string>InputNerdFontOPM-Regular 19</string>
+			<string>JetBrainsMonoNFM-Regular 19</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>

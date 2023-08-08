@@ -15,7 +15,7 @@ local sources = {
   b.formatting.clang_format,
 
   -- shell
-  b.shellcheck,
+  b.code_actions.shellcheck,
 }
 
 null_ls.setup {

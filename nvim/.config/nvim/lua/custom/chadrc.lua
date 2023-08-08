@@ -5,8 +5,22 @@ local M = {}
 local highlights = require "custom.highlights"
 
 M.ui = {
-  theme = "onedark",
-  theme_toggle = { "onedark", "one_light" },
+  theme = "catppuccin",
+  theme_toggle = { "catppuccin", "one_light" },
+
+  statusline = {
+    separator_style = "block",
+    theme = "vscode_colored",
+  },
+
+  cmp = {
+    style = "atom_colored",
+    icons = true,
+  },
+
+  telescope = {
+    style = "bordered",
+  },
 
   hl_override = highlights.override,
   hl_add = highlights.add,
