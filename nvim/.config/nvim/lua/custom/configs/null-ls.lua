@@ -16,6 +16,8 @@ local sources = {
 
   -- shell
   b.code_actions.shellcheck,
+  b.formatting.shfmt,
+  b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
 }
 
 null_ls.setup {

@@ -40,6 +40,10 @@ local plugins = {
 
   -- Install a plugin
   {
+    "godlygeek/tabular",
+    cmd = "Tabularize"
+  },
+  {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()

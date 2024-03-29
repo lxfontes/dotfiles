@@ -4,7 +4,7 @@ fi
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 # homebrew paths
-export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gnu-getopt/bin:/opt/homebrew/opt/python@3/bin:$PATH
+export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH
 
 ## direnv.net
 eval "$(direnv hook zsh)"
@@ -26,6 +26,13 @@ iterm_badge() {
 
 tmux_set_title() {
   printf '\033]2;%s\033\\' "$1"
+}
+
+function kgetall {
+  for i in $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
+    echo "Resource:" $i
+    kubectl -n ${1} get --ignore-not-found ${i}
+  done
 }
 
 # Homebrew will not send analytics
