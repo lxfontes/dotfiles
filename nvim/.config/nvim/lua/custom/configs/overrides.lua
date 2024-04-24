@@ -1,6 +1,5 @@
 local M = {}
 
-
 M.treesitter = {
   ensure_installed = {
     "vim",
@@ -72,6 +71,14 @@ M.copilot = {
   panel = {
     enable = false
   }
+}
+
+M.gitblame = {
+  delay = 5000,
+  message_template = '<summary> • <date> • <committer> • <sha>',
+  schedule_event = 'CursorHold',
+  clear_event = 'CursorMovedI',
+  date_format = '%r'
 }
 
 return M

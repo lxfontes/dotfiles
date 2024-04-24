@@ -59,6 +59,12 @@ local plugins = {
   },
 
   {
+    "f-person/git-blame.nvim",
+    event = "VeryLazy",
+    opts = overrides.gitblame,
+  },
+
+  {
     "hrsh7th/nvim-cmp",
     dependencies = {
       {
