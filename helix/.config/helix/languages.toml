@@ -1,0 +1,21 @@
+[language-server.efm]
+command = "efm-langserver"
+config.documentFormatting = true
+
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+config.hostInfo = "helix"
+
+[language-server.copilot]
+command = "copilot"
+args = ["--stdio"]
+
+[[language]]
+name = "typescript"
+auto-format = true
+language-servers = [
+  { name = "efm" only-features = ["format", "diagnostics"]},
+  { name = "typescript-language-server" except-features = ["format", "diagnostics"]},
+  "copilot"
+]

@@ -1,4 +1,12 @@
-theme = "nord"
+theme = "tokyonight_storm"
+
+[editor]
+bufferline = "multiple"
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
 
 [editor.cursor-shape]
 insert = "bar"
@@ -8,13 +16,17 @@ select = "underline"
 [editor.statusline]
 left = ["mode", "diagnostics"]
 center = ["file-name"]
-right = ["selections", "file-type", "file-encoding", "position-percentage", "position"]
+right = ["selections", "file-type", "file-encoding", "version-control", "position"]
+separator = "│"
 
 [keys.normal]
+esc = ["collapse_selection", "keep_primary_selection"]
 g = { a = "code_action", o = "goto_last_accessed_file" }
 "ret" = ["move_line_down", "goto_first_nonwhitespace"] # Maps the enter key to move to start of next line
 X = "extend_line_above"
 D = "delete_char_backward"
+d = { d = ["extend_line_below", "delete_selection"] }
+C-t = ["jump_backward"]
 
 [keys.insert]
 C-space = "completion"
