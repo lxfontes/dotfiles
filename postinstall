@@ -3,13 +3,6 @@ set -eux
 
 pip3 install --user --upgrade neovim
 
-[ ! -f "$HOME/.config/nvim/autoload/plug.vim" ] && \
-curl -s -fLo "$HOME/.config/nvim/autoload/plug.vim" --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# the current process has no idea of gopath / new env vars
-zsh -i -l -c "vim +PlugInstall +qall +UpdateRemotePlugins +GoInstallBinaries"
-
 echo "NEED SUDO!"
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &

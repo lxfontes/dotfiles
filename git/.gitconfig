@@ -7,7 +7,6 @@
 
 [alias]
   root = rev-parse --show-toplevel
-  hist = log --pretty=format:\"%h %ad%x09| %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
   ds = diff --staged      # git ds - diff your staged changes == review before committing.
@@ -17,11 +16,7 @@
   cp = cherry-pick
   ps = push
   pl = pull
-  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-  l = log -n 10 --graph --date=short
-  simple = log --pretty=format:\" * %s\"
   br = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
-  squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
   pushf = push --force-with-lease
 	exec = "!exec "
 
@@ -36,42 +31,45 @@
 
 [apply]
     whitespace = nowarn
+
 [branch]
     autosetupmerge = true
+
 [push]
     default = current
     autoSetupRemote = true
+
 [rerere]
     enabled = true
+
 [core]
 	excludesfile = /Users/lfontes/.gitignore
-    pager = diffr | less -R
+  pager = diffr | less -R
+
 [interactive]
     diffFilter = diffr
+
 [diff]
     colorMoved = default
+
 [commit]
 	template = ~/.config/git/GIT_COMMIT_TEMPLATE
 #	gpgsign = true
+
 [gpg]
 	program = gpg
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-[secrets]
-	providers = git secrets --aws-provider
-	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
-	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
-	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
-	allowed = AKIAIOSFODNN7EXAMPLE
-	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-[init]
-	templateDir = ~/.config/git/template
+
 [pull]
 	rebase = true
+
 [fetch]
 	prune = true

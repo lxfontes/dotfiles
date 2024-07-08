@@ -88,4 +88,3 @@ eval "$(pyenv init -)"
 if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
   source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
-tmux_set_title base
