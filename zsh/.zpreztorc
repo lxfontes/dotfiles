@@ -1,7 +1,6 @@
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
   'environment' \
-  'completion' \
   'syntax-highlighting' \
   'history' \
   'docker' \
@@ -11,6 +10,7 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
+  'completion' \
   'tmux' \
   'prompt'
 

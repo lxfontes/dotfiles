@@ -24,7 +24,7 @@
     pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 
 [credential]
   helper = osxkeychain
@@ -44,10 +44,10 @@
 
 [core]
 	excludesfile = /Users/lfontes/.gitignore
-  pager = diffr | less -R
+  pager = delta
 
 [interactive]
-    diffFilter = diffr
+    diffFilter = delta --color-only
 
 [diff]
     colorMoved = default
@@ -65,11 +65,16 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+; [url "git@github.com:"]
+; 	insteadOf = https://github.com/
 
 [pull]
 	rebase = true
 
 [fetch]
 	prune = true
+
+[delta]
+  side-by-side = true
+  navigate = true
+

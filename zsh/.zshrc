@@ -1,8 +1,14 @@
+#zmodload zsh/zprof
+
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+
+## rust
+. "$HOME/.cargo/env"
+
 # homebrew paths
 export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gnu-getopt/bin:$PATH
 
@@ -19,12 +25,16 @@ source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source <(kubectl completion zsh)
 
+function jjq {
+    jq -R -r "${1:-.} as \$line | try fromjson catch \$line"
+}
+
 iterm_badge() {
  printf "\e]1337;SetBadgeFormat=%s\a" \
   $(echo -n "$@" | base64)
 }
 
-tmux_set_title() {
+terminal_title() {
   printf '\033]2;%s\033\\' "$1"
 }
 
@@ -74,12 +84,6 @@ alias kall='kubectl get $(kubectl api-resources --namespaced=true --no-headers -
 bindkey "^r" history-incremental-search-backward
 export KEYTIMEOUT=1
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH="$(yarn global bin):$PATH"
-
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -88,3 +92,8 @@ eval "$(pyenv init -)"
 if [ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
   source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
+
+#zprof
+
+# Added by Windsurf
+export PATH="/Users/lucas/.codeium/windsurf/bin:$PATH"
