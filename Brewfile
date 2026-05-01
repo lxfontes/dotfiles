@@ -37,7 +37,7 @@ brew 'moreutils'
 brew 'neovim', args: ['head']
 brew 'ngrep'
 brew 'nmap'
-brew 'nvm'
+brew 'mise'
 brew 'openssl'
 brew 'pigz'
 brew 'pinentry-mac'

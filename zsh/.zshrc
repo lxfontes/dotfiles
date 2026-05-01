@@ -4,7 +4,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 ## rust
 . "$HOME/.cargo/env"
@@ -20,6 +20,9 @@ eval "$(zoxide init --cmd j zsh)"
 
 ## rubby
 eval "$(rbenv init - --no-rehash)"
+
+## nodejs
+eval "$(mise activate zsh)"
 
 source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"
 source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"
